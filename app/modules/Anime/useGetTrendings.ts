@@ -1,4 +1,4 @@
-import {BASE_API_ANIME_URL} from "@/app/constants/configs";
+import {BASE_API_ANIME_URL} from "@constants/configs";
 
 type AnimeDataResponse = {
   data: AnimeData[];

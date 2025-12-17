@@ -15,7 +15,8 @@
     "next": "13.5.5",
     "react": "^18",
     "react-dom": "^18",
-    "clean-deep": "^3.4.0"
+    "clean-deep": "^3.4.0",
+    "react-icons": "^5.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
