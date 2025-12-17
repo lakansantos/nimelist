@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <div className="h-screen bg-default_blue text-white">
       <ul>
-        {data.map((item, index) => {
+        {data.map((item) => {
           const {mal_id, title} = item;
           return <li key={mal_id}>{title}</li>;
         })}

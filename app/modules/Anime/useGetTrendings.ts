@@ -1,13 +1,20 @@
 import {BASE_API_ANIME_URL} from "@/app/constants/configs";
 
-const useGetTrending = async () => {
-  const joinedURL = `${BASE_API_ANIME_URL}/top/anime`;
+type AnimeDataResponse = {
+  data: AnimeData[];
+};
 
+const useGetTrending = async (): Promise<AnimeDataResponse> => {
+  const joinedURL = `${BASE_API_ANIME_URL}/top/anime`;
   const response = await fetch(joinedURL);
-  const {data} = response.ok ? await response.json() : [];
+
+  if (!response.ok) {
+    return {data: []};
+  }
+  const json = await response.json();
 
   return {
-    data,
+    data: json.data,
   };
 };
 
