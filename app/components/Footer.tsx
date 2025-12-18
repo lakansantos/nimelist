@@ -1,6 +1,5 @@
 import {socialItems} from "@constants/socialItems";
 
-console.log(socialItems, "socialItems");
 const Footer = () => {
   return (
     <footer className="min-h-[100px] h-fit w-full py-4 flex gap-3 bg-default_blue text-white flex-col justify-center items-center">

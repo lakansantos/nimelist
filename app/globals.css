@@ -11,3 +11,7 @@
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+.cards-container::-webkit-scrollbar {
+  display: none;
+}

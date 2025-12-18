@@ -25,11 +25,8 @@
       "@fetches/*": ["fetches/*"],
       "@hooks": ["hooks/*"],
       "@modules/*": ["modules/*"],
-      "@types/*": ["types/*"],
-      "@utils/*": ["utils/*"],
-      "@services/*": ["services/*"],
-      "@routes": ["routes/index"],
-      "@middlewares/*": ["middlewares/*"]
+      "@app-types/*": ["types/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

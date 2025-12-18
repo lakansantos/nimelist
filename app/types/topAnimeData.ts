@@ -1,12 +1,22 @@
-type AnimeData = {
+export type AnimeData = {
   mal_id: number;
   url: string;
-  images: (typeof images)[keyof typeof images];
+  images: {
+    jpg: {
+      image_url: string;
+      small_image_url: string;
+      large_image_url: string;
+    };
+    webp: {
+      image_url: string;
+      small_image_url: string;
+      large_image_url: string;
+    };
+  };
   trailer: {
     youtube_id: number | null;
     url: string | null;
     embed_url: null;
-    images: (typeof images)[keyof typeof images];
   };
   approved: boolean;
   titles: {type: string; title: string}[];
