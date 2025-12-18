@@ -15,6 +15,7 @@ const config: Config = {
       },
       colors: {
         default_blue: "#0f141e",
+        default_light: "#1b2436ff",
       },
     },
   },
