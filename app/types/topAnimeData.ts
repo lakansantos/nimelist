@@ -1,4 +1,4 @@
-export type AnimeData = {
+export type AnimeEntry = {
   mal_id: number;
   url: string;
   images: {
@@ -13,92 +13,16 @@ export type AnimeData = {
       large_image_url: string;
     };
   };
-  trailer: {
-    youtube_id: number | null;
-    url: string | null;
-    embed_url: null;
-  };
-  approved: boolean;
-  titles: {type: string; title: string}[];
   title: string;
-  title_english: string;
-  title_japanese: string;
-  title_synonyms: string[];
-  type: string;
-  source: string;
-  episodes: number;
-  status: string;
-  airing: boolean;
-  aired: {
-    from: string;
-    to: string;
-    prop: {
-      from: {
-        day: number;
-        month: number;
-        year: number;
-      };
-      to: {
-        day: number;
-        month: number;
-        year: number;
-      };
-    };
-    string: string;
+};
+
+export type AnimeData = {
+  mal_id: string;
+  entry: AnimeEntry[];
+  content: string;
+  date: string;
+  user: {
+    url: string;
+    username: string;
   };
-  duration: string;
-  rating: string;
-  score: number;
-  scored_by: number;
-  rank: number;
-  popularity: number;
-  members: number;
-  favorites: number;
-  synopsis: string;
-  background: "";
-  season: "spring";
-  year: number;
-  broadcast: {
-    day: string;
-    time: string;
-    timezone: string;
-    string: string;
-  };
-  producers: {
-    mal_id: number;
-    type: string;
-    name: string;
-    url: string;
-  }[];
-  licensors: {
-    mal_id: number;
-    type: string;
-    name: string;
-    url: string;
-  }[];
-  studios: {
-    mal_id: number;
-    type: string;
-    name: string;
-    url: string;
-  }[];
-  genres: {
-    mal_id: number;
-    type: string;
-    name: string;
-    url: string;
-  }[];
-  explicit_genres: [];
-  themes: {
-    mal_id: number;
-    type: string;
-    name: string;
-    url: string;
-  }[];
-  demographics: {
-    mal_id: number;
-    type: string;
-    name: string;
-    url: string;
-  }[];
 };

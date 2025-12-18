@@ -1,11 +1,12 @@
+import {AnimeData} from "@app-types/topAnimeData";
 import {BASE_API_JIKAN_URL} from "@constants/configs";
 
 type AnimeDataResponse = {
-  data: AnimeDataResponse[];
+  data: AnimeData[];
 };
 
-const useGetTopAnime = async (): Promise<AnimeDataResponse> => {
-  const joinedURL = `${BASE_API_JIKAN_URL}/top/anime?filter=bypopularity`;
+const useGetRecommendedAnime = async (): Promise<AnimeDataResponse> => {
+  const joinedURL = `${BASE_API_JIKAN_URL}/recommendations/anime`;
   const response = await fetch(joinedURL);
 
   if (!response.ok) {
@@ -18,4 +19,4 @@ const useGetTopAnime = async (): Promise<AnimeDataResponse> => {
   };
 };
 
-export default useGetTopAnime;
+export default useGetRecommendedAnime;
