@@ -11,7 +11,7 @@ type AnimeCardsContainerProps = {
 const RecommendedAnime = ({data, title}: AnimeCardsContainerProps) => {
   return (
     <div className="min-h-[200px] flex flex-col  max-w-full">
-      <h2 className="text-3xl text-white mb-5">{title}</h2>
+      <h2 className="text-3xl font-thin text-white mb-5">{title}</h2>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-3 w-full">
         {data.map((item) => (
           <div key={item.mal_id} className="d-block">

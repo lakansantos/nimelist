@@ -56,7 +56,7 @@ export interface AnimeAttributes {
   totalLength: number;
 
   youtubeVideoId: string;
-  showType: string;
+  showType: "TV" | "movie";
   nsfw: boolean;
 }
 
