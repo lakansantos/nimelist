@@ -52,7 +52,7 @@ const Banner = ({data}: {data: Anime[]}) => {
       <div className="absolute inset-0 bg-black/60 z-10" />
 
       {/* Fade bottom */}
-      <div className="absolute bottom-0 left-0 w-full h-32 z-20 bg-gradient-to-t from-black to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-[32px] z-20 bg-gradient-to-t from-default_blue to-transparent" />
 
       {/* Text content */}
       <div
