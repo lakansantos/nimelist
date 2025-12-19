@@ -14,6 +14,9 @@ const types = {
   movie: "Movie",
 };
 const Banner = ({data}: {data: Anime[]}) => {
+  if (data.length === 0) {
+    return;
+  }
   const filteredData = data.filter(
     (item) => item.attributes?.coverImage != null
   );
@@ -64,8 +67,11 @@ const Banner = ({data}: {data: Anime[]}) => {
           }
         )}
       >
-        <div className="text-4xl md:text-7xl text-white max-w-[50%] h-1/5 overflow-hidden whitespace-nowrap text-ellipsis">
-          <p> {titles.en ?? canonicalTitle ?? titles.en_us ?? titles.ja_jp}</p>
+        <div className="text-5xl md:text-7xl text-white max-w-[100%] lg:max-w-[50%] h-fit mb-2">
+          <p className="overflow-hidden whitespace-nowrap text-ellipsis">
+            {" "}
+            {titles.en ?? canonicalTitle ?? titles.en_us ?? titles.ja_jp}
+          </p>
         </div>
         <div className="text-2sm mb-2 inline-flex items-center font-thin text-white max-w-full md:max-w-[50%] gap-2">
           <span>{extractYear(startDate)}</span>
