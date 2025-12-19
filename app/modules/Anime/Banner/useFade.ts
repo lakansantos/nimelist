@@ -5,6 +5,8 @@ const useFade = (filteredData: Anime[]) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fade, setFade] = useState(false);
 
+  const [load, setLoad] = useState(false);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setFade(false); // start fade-out
@@ -29,6 +31,8 @@ const useFade = (filteredData: Anime[]) => {
     setFade,
     currentIndex,
     setCurrentIndex,
+    load,
+    setLoad,
   };
 };
 
