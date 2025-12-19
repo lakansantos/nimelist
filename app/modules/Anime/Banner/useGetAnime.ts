@@ -6,7 +6,7 @@ type AnimeDataResponse = {
 };
 
 const useGetAnime = async (): Promise<AnimeDataResponse> => {
-  const joinedURL = `${BASE_API_KITSU_URL}/anime`;
+  const joinedURL = `${BASE_API_KITSU_URL}/anime?page[limit]=20`;
   const response = await fetch(joinedURL);
 
   if (!response.ok) {

@@ -8,6 +8,7 @@ import {IoIosInformationCircleOutline} from "react-icons/io";
 import useFade from "./useFade";
 import {extractYear} from "@utils/dates";
 import {MdLocalMovies} from "react-icons/md";
+import SearchBar from "@components/SearchBar";
 
 const types = {
   TV: "Series",
@@ -50,6 +51,8 @@ const Banner = ({data}: {data: Anime[]}) => {
         )}
         priority
       />
+
+      <SearchBar />
 
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/60 z-10" />
