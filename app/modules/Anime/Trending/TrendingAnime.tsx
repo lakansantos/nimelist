@@ -51,13 +51,13 @@ const TrendingAnime = ({data, title}: AnimeCardsContainerProps) => {
                 className="relative h-[200px] min-w-[400px] w-[400px] object-cover rounded-lg"
               >
                 <Image
-                  priority={true}
+                  priority
                   fill
+                  sizes="400px"
                   src={item.attributes.coverImage.original}
                   alt={`${item.attributes.titles.en} image`}
                   className="h-[200px] min-w-[400px] w-[400px] object-cover rounded-lg"
                 />
-
                 {/* Optional dark overlay */}
                 <div className="absolute inset-0 bg-black/50 z-10" />
 

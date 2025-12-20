@@ -52,6 +52,7 @@ const Banner = ({data}: {data: Anime[]}) => {
           src={coverImage.original}
           alt="Banner"
           fill
+          sizes="400px"
           onLoad={() => setLoad(true)}
           className={cx(
             "object-cover transition-opacity duration-1000 ease-out",
@@ -74,7 +75,7 @@ const Banner = ({data}: {data: Anime[]}) => {
         {/* Text content */}
         <div
           className={cx(
-            "relative z-30 h-full flex flex-col justify-end pb-[40px] items-start p-5 transition-opacity duration-1000 ease-out",
+            "relative z-30 h-full w-full flex flex-col justify-end pb-[40px] md:lg:pb-[70px] items-start p-5 transition-opacity duration-1000 ease-out",
             {
               "opacity-100": fade,
               "opacity-0": !fade,
