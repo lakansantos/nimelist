@@ -82,8 +82,8 @@ const Banner = ({data}: {data: Anime[]}) => {
             }
           )}
         >
-          <div className="text-5xl md:text-7xl text-white max-w-[100%] lg:max-w-[50%] h-fit mb-2">
-            <p className="overflow-hidden whitespace-nowrap text-ellipsis">
+          <div className="text-5xl md:text-7xl text-white max-w-[100%] lg:max-w-[50%] h-fit">
+            <p className="overflow-hidden whitespace-nowrap text-ellipsis leading-snug">
               {" "}
               {titles.en ?? canonicalTitle ?? titles.en_us ?? titles.ja_jp}
             </p>
