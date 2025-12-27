@@ -6,7 +6,7 @@ import RecommendedCardSkeleton from "./RecommendedCardSkeleton";
 import useLoad from "./useLoad";
 import cx from "classnames";
 import removeDuplicateDataByTitle from "@utils/removeDuplicateDataByTitle";
-import AnimeNoData from "@components/Anime/AnimeNoData";
+import AnimeNoDataBySection from "@components/Anime/AnimeNoDataBySection";
 
 type AnimeCardsContainerProps = {
   data: AnimeData[];
@@ -18,7 +18,7 @@ const RecommendedAnime = ({data, title}: AnimeCardsContainerProps) => {
 
   const filteredData = removeDuplicateDataByTitle(data);
 
-  if (data.length === 0 || !data) return <AnimeNoData />;
+  if (data.length === 0 || !data) return <AnimeNoDataBySection />;
   return (
     <>
       <div

@@ -6,11 +6,16 @@ import useGetTrendingAnime from "@modules/Anime/Trending/useGetTrendingAnime";
 import Navbar from "@components/Navbar";
 import Banner from "@modules/Anime/Banner/Banner";
 import useGetAnime from "@modules/Anime/Banner/useGetAnime";
+import AnimeNoData from "@components/Anime/AnimeNoData";
 
 export default async function Home() {
   const {data: trendingData} = await useGetTrendingAnime();
   const {data: recommendedData} = await useGetRecommendedAnime();
   const {data: animeData} = await useGetAnime();
+
+  const bothEmptyData =
+    (trendingData.length === 0 || !trendingData) &&
+    (recommendedData.length === 0 || !recommendedData);
 
   return (
     <>
@@ -18,11 +23,17 @@ export default async function Home() {
         <Navbar />
         <div className="flex flex-1 gap-5 flex-col min-h-[200px] h-fit overflow-hidden">
           <Banner data={animeData} />
-          <TrendingAnime title="Trending" data={trendingData} />
-          <RecommendedAnime
-            title="Recommended for you"
-            data={recommendedData}
-          />
+          {bothEmptyData ? (
+            <AnimeNoData />
+          ) : (
+            <>
+              <TrendingAnime title="Trending" data={trendingData} />
+              <RecommendedAnime
+                title="Recommended for you"
+                data={recommendedData}
+              />
+            </>
+          )}
         </div>
       </div>
       <Footer />

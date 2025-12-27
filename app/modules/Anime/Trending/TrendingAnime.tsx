@@ -8,7 +8,7 @@ import {extractYear} from "@utils/dates";
 import useLoad from "./useLoad";
 import TrendingCardSkeleton from "./TrendingCardSkeleton";
 import cx from "classnames";
-import AnimeNoData from "@components/Anime/AnimeNoData";
+import AnimeNoDataBySection from "@components/Anime/AnimeNoDataBySection";
 
 type AnimeCardsContainerProps = {
   data: Anime[];
@@ -20,7 +20,7 @@ const TrendingAnime = ({data, title}: AnimeCardsContainerProps) => {
     useTrendingScroll();
   const {load, setLoad} = useLoad();
 
-  if (data.length === 0 || !data) return <AnimeNoData />;
+  if (data.length === 0 || !data) return <AnimeNoDataBySection />;
 
   return (
     <div className="relative min-h-[200px] flex flex-col max-w-full">
