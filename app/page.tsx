@@ -14,7 +14,7 @@ export default async function Home() {
 
   return (
     <>
-      <div className="relative bg-default_blue text-white p-5 flex md:flex-row flex-col gap-5">
+      <div className="relative min-h-[calc(100vh-10%)] bg-default_blue text-white p-5 flex md:flex-row flex-col gap-5">
         <Navbar />
         <div className="flex flex-1 gap-5 flex-col min-h-[200px] h-fit overflow-hidden">
           <Banner data={animeData} />
