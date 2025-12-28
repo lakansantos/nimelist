@@ -1,9 +1,18 @@
+"use client";
 import React from "react";
 import {RiGalleryView2} from "react-icons/ri";
 import {FaBookmark} from "react-icons/fa";
 import {RxAvatar} from "react-icons/rx";
+import Link from "next/link";
 
 const Navbar = () => {
+  const isBrowser = () => typeof window !== "undefined"; //The approach recommended by Next.js
+
+  function scrollToTop() {
+    if (!isBrowser()) return;
+    window.scrollTo({top: 0});
+  }
+
   return (
     <div
       className="
@@ -20,7 +29,9 @@ const Navbar = () => {
     "
     >
       <div className="logo-container mb-0 md:mb-6 text-4xl flex justify-center items-center">
-        L
+        <Link href="/" scroll={false}>
+          <button onClick={scrollToTop}>L</button>
+        </Link>
       </div>
       <ul className="option-container flex flex-row md:flex-col justify-center items-center md:justify-start md:items-start flex-1 gap-3">
         <li>
