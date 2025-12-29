@@ -8,7 +8,7 @@ import {IoIosInformationCircleOutline} from "react-icons/io";
 import useFade from "./useFade";
 import {extractYear} from "@utils/dates";
 import {MdLocalMovies} from "react-icons/md";
-import SearchBar from "@components/SearchBar";
+import SearchBar from "@modules/Search/SearchBar";
 import classNames from "classnames";
 import BannerSkeleton from "./BannerSkeleton";
 
