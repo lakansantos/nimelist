@@ -26,3 +26,5 @@ export type AnimeData = {
     username: string;
   };
 };
+
+export type AnimeDetailData = AnimeEntry & Pick<AnimeData, "mal_id">;

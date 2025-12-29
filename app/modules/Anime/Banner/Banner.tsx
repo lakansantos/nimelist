@@ -11,17 +11,21 @@ import {MdLocalMovies} from "react-icons/md";
 import SearchBar from "@modules/Search/SearchBar";
 import classNames from "classnames";
 import BannerSkeleton from "./BannerSkeleton";
+import {useRouter} from "next/navigation";
 
 const types = {
   TV: "Series",
   movie: "Movie",
 };
+
 const Banner = ({data}: {data: Anime[]}) => {
   const filteredData = data.filter(
     (item) => item.attributes?.coverImage != null
   );
 
   const {currentIndex, fade, load, setLoad} = useFade(filteredData);
+
+  const router = useRouter();
 
   if (data.length === 0) {
     return;
@@ -108,6 +112,7 @@ const Banner = ({data}: {data: Anime[]}) => {
             <button
               className="bg-white text-black px-5 py-2 w-fit flex flex-row justify-center items-center gap-2"
               aria-label="More information about this anime"
+              onClick={() => router.push(`/${filteredData[currentIndex].id}`)}
             >
               <IoIosInformationCircleOutline className="text-3xl" />{" "}
               <span>More Info</span>
