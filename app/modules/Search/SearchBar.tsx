@@ -56,7 +56,7 @@ const SearchBar = () => {
             return (
               <a
                 key={anime.id}
-                href="#"
+                href={`/${anime.id}`}
                 className="flex items-center gap-3 p-3 hover:bg-gray-100 transition"
               >
                 <div className="relative w-12 h-16 shrink-0 rounded overflow-hidden">
