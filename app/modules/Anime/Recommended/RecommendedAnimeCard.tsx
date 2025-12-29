@@ -22,7 +22,9 @@ const RecommendedAnimeCard = ({
           className="object-cover cursor-pointer scale-100 hover:scale-110 transition-transform duration-300"
         />
       </div>
-      <p className="mt-2 text-white text-sm">{item.entry[0].title}</p>
+      <p className="mt-2 text-white text-sm overflow-hidden whitespace-nowrap text-ellipsis leading-snug">
+        {item.entry[0].title}
+      </p>
     </div>
   );
 };
