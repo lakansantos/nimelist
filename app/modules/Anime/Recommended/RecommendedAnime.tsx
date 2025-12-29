@@ -1,6 +1,5 @@
 "use client";
 import {AnimeData} from "@app-types/topAnimeData";
-import Image from "next/image";
 import React, {useState} from "react";
 import RecommendedCardSkeleton from "./RecommendedCardSkeleton";
 import useLoad from "./useLoad";
@@ -8,6 +7,7 @@ import cx from "classnames";
 import removeDuplicateDataByTitle from "@utils/removeDuplicateDataByTitle";
 import AnimeNoDataBySection from "@components/Anime/AnimeNoDataBySection";
 import {IoChevronDown, IoChevronUp} from "react-icons/io5";
+import RecommendedAnimeCard from "./RecommendedAnimeCard";
 
 type AnimeCardsContainerProps = {
   data: AnimeData[];
@@ -40,20 +40,11 @@ const RecommendedAnimeToggle = ({data, title}: AnimeCardsContainerProps) => {
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
           {visibleData.map((item, index) => (
-            <div key={`${index}-${item.mal_id}`} className="w-full">
-              <div className="relative w-full h-[400px] rounded-lg overflow-hidden">
-                <Image
-                  fill
-                  sizes="(max-width: 640px) 100vw, 300px"
-                  priority
-                  onLoad={() => setLoad(true)}
-                  src={item.entry[0].images.jpg.large_image_url}
-                  alt={`${item.entry[0].title} cover`}
-                  className="object-cover"
-                />
-              </div>
-              <p className="mt-2 text-white text-sm">{item.entry[0].title}</p>
-            </div>
+            <RecommendedAnimeCard
+              item={item}
+              setLoad={setLoad}
+              key={`${index}-${item.mal_id}`}
+            />
           ))}
         </div>
 

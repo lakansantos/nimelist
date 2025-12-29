@@ -1,14 +1,13 @@
 "use client";
 import {Anime} from "@app-types/anime";
-import Image from "next/image";
 import {HiOutlineChevronLeft, HiOutlineChevronRight} from "react-icons/hi";
 import TrendingScrollerButton from "./TrendingScrollerButton";
 import useTrendingScroll from "./useTrendingScroll";
-import {extractYear} from "@utils/dates";
 import useLoad from "./useLoad";
 import TrendingCardSkeleton from "./TrendingCardSkeleton";
 import cx from "classnames";
 import AnimeNoDataBySection from "@components/Anime/AnimeNoDataBySection";
+import TrendingAnimeCard from "./TrendingAnimeCard";
 
 type AnimeCardsContainerProps = {
   data: Anime[];
@@ -58,36 +57,8 @@ const TrendingAnime = ({data, title}: AnimeCardsContainerProps) => {
           )}
         >
           {data.map((item) => {
-            const {titles, ageRating, startDate, canonicalTitle, coverImage} =
-              item.attributes;
             return (
-              <div
-                key={item.id}
-                className="relative h-[200px] min-w-[400px] w-[400px] object-cover rounded-lg"
-              >
-                <Image
-                  priority
-                  fill
-                  sizes="400px"
-                  src={coverImage.original}
-                  alt={`${titles.en} image`}
-                  className="h-[200px] min-w-[400px] w-[400px] object-cover rounded-lg"
-                  onLoad={() => setLoad(true)}
-                />
-
-                {/* Dark overlay */}
-                <div className="absolute inset-0 bg-black/50 z-10" />
-
-                {/* Text content */}
-                <div className="relative z-20 h-full flex flex-col justify-end items-start p-5">
-                  <p className="text-sm text-white max-w-4xl">
-                    {extractYear(startDate)} · {ageRating}
-                  </p>
-                  <p className="md:text-2xl text-white">
-                    {titles.en_us ?? canonicalTitle ?? titles.en_jp}
-                  </p>
-                </div>
-              </div>
+              <TrendingAnimeCard item={item} key={item.id} setLoad={setLoad} />
             );
           })}
         </div>
