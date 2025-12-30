@@ -1,32 +1,36 @@
 "use client";
 import {AnimeData} from "@app-types/topAnimeData";
-import React, {useState} from "react";
+import React from "react";
 import RecommendedCardSkeleton from "./RecommendedCardSkeleton";
 import useLoad from "./useLoad";
 import cx from "classnames";
 import removeDuplicateDataByTitle from "@utils/removeDuplicateDataByTitle";
 import AnimeNoDataBySection from "@components/Anime/AnimeNoDataBySection";
-import {IoChevronDown, IoChevronUp} from "react-icons/io5";
 import RecommendedAnimeCard from "./RecommendedAnimeCard";
+import useRecommendedInfiniteScroll from "./useRecommendedInfiniteScroll";
 
 type AnimeCardsContainerProps = {
   data: AnimeData[];
   title: string;
 };
 
-const INITIAL_COUNT = 10;
+const INITIAL_COUNT = 9;
+const LOAD_INCREMENT = 10; // how many more to load per scroll
 
-const RecommendedAnimeToggle = ({data, title}: AnimeCardsContainerProps) => {
+const RecommendedAnime = ({data, title}: AnimeCardsContainerProps) => {
   const {load, setLoad} = useLoad();
-  const [showAll, setShowAll] = useState(false);
 
   const filteredData = removeDuplicateDataByTitle(data);
 
+  const {visibleCount} = useRecommendedInfiniteScroll(
+    filteredData,
+    INITIAL_COUNT,
+    LOAD_INCREMENT
+  );
+
   if (!data || data.length === 0) return <AnimeNoDataBySection />;
 
-  const visibleData = showAll
-    ? filteredData
-    : filteredData.slice(0, INITIAL_COUNT);
+  const visibleData = filteredData.slice(0, visibleCount);
 
   return (
     <>
@@ -47,21 +51,6 @@ const RecommendedAnimeToggle = ({data, title}: AnimeCardsContainerProps) => {
             />
           ))}
         </div>
-
-        {filteredData.length > INITIAL_COUNT && (
-          <button
-            onClick={() => setShowAll((prev) => !prev)}
-            className="mt-6 flex gap-4 self-start bg-white border px-7 py-2
-             text-sm text-black hover:bg-gray-200 transition"
-          >
-            {showAll ? (
-              <IoChevronUp className="text-xl" />
-            ) : (
-              <IoChevronDown className="text-xl" />
-            )}
-            <span>{showAll ? "See less" : "See all"}</span>
-          </button>
-        )}
       </div>
 
       <RecommendedCardSkeleton load={load} cards={INITIAL_COUNT} />
@@ -69,4 +58,4 @@ const RecommendedAnimeToggle = ({data, title}: AnimeCardsContainerProps) => {
   );
 };
 
-export default RecommendedAnimeToggle;
+export default RecommendedAnime;
