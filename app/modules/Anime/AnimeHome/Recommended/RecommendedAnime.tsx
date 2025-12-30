@@ -8,6 +8,7 @@ import removeDuplicateDataByTitle from "@utils/removeDuplicateDataByTitle";
 import AnimeNoDataBySection from "@components/Anime/AnimeNoDataBySection";
 import RecommendedAnimeCard from "./RecommendedAnimeCard";
 import useRecommendedInfiniteScroll from "./useRecommendedInfiniteScroll";
+import {IoMdStar} from "react-icons/io";
 
 type AnimeCardsContainerProps = {
   data: AnimeData[];
@@ -40,7 +41,10 @@ const RecommendedAnime = ({data, title}: AnimeCardsContainerProps) => {
           flex: load,
         })}
       >
-        <h2 className="text-3xl font-thin text-white mb-5">{title}</h2>
+        <div className="mb-5 flex items-center gap-1">
+          <IoMdStar className="text-white text-3xl" />
+          <p className="text-3xl text-white font-thin"> {title}</p>
+        </div>
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
           {visibleData.map((item, index) => (

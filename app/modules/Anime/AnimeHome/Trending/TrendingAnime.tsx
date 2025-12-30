@@ -8,6 +8,7 @@ import TrendingCardSkeleton from "./TrendingCardSkeleton";
 import cx from "classnames";
 import AnimeNoDataBySection from "@components/Anime/AnimeNoDataBySection";
 import TrendingAnimeCard from "./TrendingAnimeCard";
+import {MdLocalFireDepartment} from "react-icons/md";
 
 type AnimeCardsContainerProps = {
   data: Anime[];
@@ -23,7 +24,10 @@ const TrendingAnime = ({data, title}: AnimeCardsContainerProps) => {
 
   return (
     <div className="relative min-h-[200px] flex flex-col max-w-full">
-      <h2 className="text-3xl text-white font-thin mb-5">{title}</h2>
+      <div className="mb-5 flex items-center gap-1">
+        <MdLocalFireDepartment className="text-orange-500 text-3xl" />
+        <p className="text-3xl text-white font-thin"> {title}</p>
+      </div>
 
       <div className="relative group">
         {clicked && scroll > 0 && (
