@@ -1,36 +1,47 @@
-import React from "react";
-import Banner from "@modules/Anime/Banner/Banner";
-import AnimeNoData from "@components/Anime/AnimeNoData";
-import TrendingAnime from "@modules/Anime/Trending/TrendingAnime";
-import RecommendedAnime from "@modules/Anime/Recommended/RecommendedAnime";
+"use client";
+import React, {lazy} from "react";
 
 import {Anime as AnimeType} from "@app-types/anime";
 import {AnimeResponse} from "@app-types/anime";
 import {AnimeData} from "@app-types/topAnimeData";
+import Sidebar from "./Sidebar/Sidebar";
+import useSidebar from "./Sidebar/useSidebar";
 
 type AnimeProps = {
-  animeData: AnimeType[];
+  animeBannerData: AnimeType[];
   trendingData: AnimeResponse;
   recommendedData: AnimeData[];
 };
-const Anime = ({animeData, trendingData, recommendedData}: AnimeProps) => {
-  const bothEmptyData =
-    (trendingData.length === 0 || !trendingData) &&
-    (recommendedData.length === 0 || !recommendedData);
+
+// Lazy load tab components
+const AnimeHome = lazy(() => import("./AnimeHome/AnimeHome"));
+const Trending = lazy(() => import("./AnimeTrending/AnimeTrending"));
+const Saved = lazy(() => import("./AnimeSaved/AnimeSaved"));
+
+const Anime = (animeProps: AnimeProps) => {
+  const sidebarProps = useSidebar();
+  const {current} = sidebarProps;
+
+  // Render function for current tab
+  const renderTab = (current: number) => {
+    switch (current) {
+      case 0:
+        return <AnimeHome {...animeProps} />;
+      case 1:
+        return <Trending />;
+      case 2:
+        return <Saved />;
+      default:
+        return <div>Not Found</div>;
+    }
+  };
+
   return (
-    <div className="flex flex-1 gap-5 flex-col min-h-[200px] h-fit overflow-hidden">
-      <Banner data={animeData} />
-      {bothEmptyData ? (
-        <AnimeNoData />
-      ) : (
-        <>
-          <TrendingAnime title="Trending" data={trendingData} />
-          <RecommendedAnime
-            title="Recommended for you"
-            data={recommendedData}
-          />
-        </>
-      )}
+    <div className="relative min-h-[calc(100vh-10%)] p-5 flex md:flex-row flex-col gap-5">
+      <Sidebar {...sidebarProps} />
+      <div className="flex flex-1 gap-5 flex-col min-h-[200px] h-fit overflow-hidden">
+        {renderTab(current)}
+      </div>
     </div>
   );
 };

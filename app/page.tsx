@@ -1,18 +1,17 @@
 import Footer from "@components/Footer";
-import useGetRecommendedAnime from "@modules/Anime/Recommended/useGetRecommendedAnime";
-import useGetTrendingAnime from "@modules/Anime/Trending/useGetTrendingAnime";
-import Sidebar from "@components/Sidebar";
-import useGetAnime from "@modules/Anime/Banner/useGetAnime";
+import useGetRecommendedAnime from "@modules/Anime/AnimeHome/Recommended/useGetRecommendedAnime";
+import useGetTrendingAnime from "@modules/Anime/AnimeHome/Trending/useGetTrendingAnime";
 import Navbar from "@components/Navbar";
 import Anime from "@modules/Anime/Anime";
+import useGetBannerAnime from "@modules/Anime/AnimeHome/Banner/useGetBannerAnime";
 
 export default async function Home() {
   const {data: trendingData} = await useGetTrendingAnime();
   const {data: recommendedData} = await useGetRecommendedAnime();
-  const {data: animeData} = await useGetAnime();
+  const {data: animeBannerData} = await useGetBannerAnime();
 
   const animeDataProps = {
-    animeData,
+    animeBannerData,
     trendingData,
     recommendedData,
   };
@@ -20,10 +19,7 @@ export default async function Home() {
   return (
     <div className="bg-default_blue text-white ">
       <Navbar />
-      <div className="relative min-h-[calc(100vh-10%)] p-5 flex md:flex-row flex-col gap-5">
-        <Sidebar />
-        <Anime {...animeDataProps} />
-      </div>
+      <Anime {...animeDataProps} />
       <Footer />
     </div>
   );

@@ -5,7 +5,7 @@ type AnimeDataResponse = {
   data: Anime[];
 };
 
-const useGetAnime = async (): Promise<AnimeDataResponse> => {
+const useGetBannerAnime = async (): Promise<AnimeDataResponse> => {
   const joinedURL = `${BASE_API_KITSU_URL}/anime?page[limit]=20`;
   const response = await fetch(joinedURL);
 
@@ -19,4 +19,4 @@ const useGetAnime = async (): Promise<AnimeDataResponse> => {
   };
 };
 
-export default useGetAnime;
+export default useGetBannerAnime;

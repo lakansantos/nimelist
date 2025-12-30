@@ -18,7 +18,7 @@ const Navbar = () => {
           <Link href="/" scroll={false}>
             <button
               onClick={scrollToTop}
-              className="text-5xl w-[50px] md:w-[70px]"
+              className="text-5xl w-[50px] md:w-[80px]"
             >
               L
             </button>
