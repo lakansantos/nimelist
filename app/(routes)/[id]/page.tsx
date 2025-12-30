@@ -24,10 +24,10 @@ const Page = async ({params}: PageProps) => {
   const {data} = await useGetDetail(id);
 
   return (
-    <>
+    <div className="bg-default_blue">
       <Navbar />
       <Details data={data} />
-    </>
+    </div>
   );
 };
 

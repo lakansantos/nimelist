@@ -19,10 +19,10 @@ const DetailPage = async ({params}: {params: {id: string}}) => {
   const {data} = await useGetRecommendedDetailById(id);
 
   return (
-    <>
+    <div className="bg-default_blue">
       <Navbar />
       <RecommendedDetailPage data={data} />
-    </>
+    </div>
   );
 };
 

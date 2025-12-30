@@ -4,6 +4,7 @@ import {FaBookmark} from "react-icons/fa";
 import {MdLocalFireDepartment} from "react-icons/md";
 import {IoHome} from "react-icons/io5";
 import classNames from "classnames";
+import useSidebarScroll from "./useSidebarScroll";
 
 const navItems = [
   {label: "Home", icon: IoHome},
@@ -29,26 +30,24 @@ function scrollToTop() {
 }
 
 const Sidebar = ({mounted, isDesktop, current, setCurrent}: SidebarProps) => {
+  const {showNav} = useSidebarScroll();
+
   return (
     <div
-      className="
-      w-full bg-default_light
-      flex items-center justify-between
-      rounded-xl md:w-[80px] md:h-fit
-      top-[100px]
-      gap-3 z-[100]
-      flex-row md:flex-col
-      sticky
-    "
+      className={classNames(
+        "w-full bg-none backdrop-blur-md md:bg-default_light flex items-center justify-between rounded-xl md:w-[80px] md:h-fit top-[100px] gap-3 z-[100] flex-row md:flex-col sticky",
+        {
+          "bg-default_light/70": showNav,
+        }
+      )}
     >
       <ul
-        className="
-        relative option-container
-        flex flex-row md:flex-col
-        justify-center items-center
-        md:justify-start md:items-start
-        flex-1
-      "
+        className={classNames(
+          "relative option-container flex flex-row md:flex-col items-center md:justify-start md:items-start flex-1",
+          {
+            "justify-start": !isDesktop,
+          }
+        )}
       >
         {/* Sliding indicator */}
         {mounted && (
@@ -56,12 +55,12 @@ const Sidebar = ({mounted, isDesktop, current, setCurrent}: SidebarProps) => {
             className="
       absolute bg-default_lightest rounded-xl
       transition-transform duration-300 ease-out
-      w-[80px] h-[100px]
+      w-[80px] h-[50px] md:h-[100px]
     "
             style={{
               transform: isDesktop
                 ? `translateY(${current * ITEM_HEIGHT}px)`
-                : `translateX(${current * ITEM_WIDTH - ITEM_WIDTH}px)`,
+                : `translateX(${current * ITEM_WIDTH}px)`,
             }}
           />
         )}
@@ -70,9 +69,7 @@ const Sidebar = ({mounted, isDesktop, current, setCurrent}: SidebarProps) => {
           <li
             key={label}
             onClick={() => {
-              if (index === 0) {
-                scrollToTop();
-              }
+              scrollToTop();
               setCurrent(index);
             }}
             className="
@@ -87,7 +84,7 @@ const Sidebar = ({mounted, isDesktop, current, setCurrent}: SidebarProps) => {
                 "text-gray-400": current !== index,
               })}
             />
-            <p className="font-thin text-sm">{label}</p>
+            <p className="font-thin text-sm hidden md:flex">{label}</p>
           </li>
         ))}
       </ul>
