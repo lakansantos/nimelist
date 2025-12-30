@@ -14,9 +14,6 @@ const BannerSkeleton = ({load}: {load: boolean}) => {
       {/* fake background */}
       <div className="absolute inset-0 bg-gray-700/40" />
 
-      {/* fake Searchbar */}
-      <div className="md:h-20 w-full max-w-full md:max-w-md absolute right-0 top-5 p-5 z-[99] bg-gray-500/40 rounded mb-4" />
-
       {/* fake overlay */}
       <div className="absolute inset-0 bg-black/50 z-10" />
 
@@ -24,7 +21,7 @@ const BannerSkeleton = ({load}: {load: boolean}) => {
       <div className="absolute bottom-0 left-0 w-full h-[32px] z-20 bg-gradient-to-t from-default_blue to-transparent" />
 
       {/* content */}
-      <div className="relative z-30 h-full flex flex-col justify-end pb-[40px] p-5 w-full">
+      <div className="relative z-30 h-full flex flex-col justify-center pb-[40px] p-5 w-full">
         {/* title */}
         <div className="h-12 md:h-20 max-w-[100%] lg:max-w-[50%] bg-gray-500/40 rounded mb-4" />
 

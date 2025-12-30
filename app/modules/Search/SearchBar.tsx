@@ -1,3 +1,4 @@
+"use client";
 import {HiOutlineSearch} from "react-icons/hi";
 import {IoClose} from "react-icons/io5";
 import React from "react";
@@ -22,10 +23,10 @@ const SearchBar = () => {
   return (
     <div
       ref={wrapperRef}
-      className="w-full max-w-md absolute right-0 top-0 p-5 z-[99]"
+      className="max-w-md absolute right-0 top-0 lg:min-w-[500px] md:min-w-[400px] p-5 z-[99]"
     >
       {/* Search Input */}
-      <div className="flex items-center gap-2 rounded-full px-4 py-2 bg-white border border-white/20">
+      <div className="flex items-center gap-2 rounded-lg px-4 py-2 bg-black/40 border border-white/20">
         <HiOutlineSearch className="text-gray-500 text-xl" />
 
         <input
@@ -34,7 +35,7 @@ const SearchBar = () => {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => query && setIsOpen(true)}
           placeholder="Search anime..."
-          className="w-full bg-transparent outline-none text-sm text-gray-800 placeholder-gray-500"
+          className="w-full bg-transparent outline-none text-sm text-white-800 placeholder-gray-500"
         />
 
         {query && (
