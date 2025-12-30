@@ -10,7 +10,7 @@ const RecommendedAnimeCard = ({
   setLoad: (load: boolean) => void;
 }) => {
   return (
-    <div className="w-full">
+    <a href={`/recommended/${item.entry[0].mal_id}`} className="w-full">
       <div className="relative w-full h-[400px] rounded-lg overflow-hidden">
         <Image
           fill
@@ -25,7 +25,7 @@ const RecommendedAnimeCard = ({
       <p className="mt-2 text-white text-sm overflow-hidden whitespace-nowrap text-ellipsis leading-snug">
         {item.entry[0].title}
       </p>
-    </div>
+    </a>
   );
 };
 

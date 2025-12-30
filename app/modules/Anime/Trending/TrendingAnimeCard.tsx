@@ -14,7 +14,10 @@ const TrendingAnimeCard = ({
     item.attributes;
 
   return (
-    <div className="relative h-[200px] min-w-[400px] w-[400px] rounded-lg overflow-hidden cursor-pointer">
+    <a
+      href={item.id}
+      className="relative h-[200px] min-w-[400px] w-[400px] rounded-lg overflow-hidden cursor-pointer"
+    >
       {/* Image wrapper */}
       <div className="relative h-full w-full transition-transform duration-300 hover:scale-110">
         <Image
@@ -40,7 +43,7 @@ const TrendingAnimeCard = ({
           {titles.en_us ?? canonicalTitle ?? titles.en_jp}
         </p>
       </div>
-    </div>
+    </a>
   );
 };
 
