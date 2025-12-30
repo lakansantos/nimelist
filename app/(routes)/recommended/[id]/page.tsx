@@ -2,6 +2,7 @@ import RecommendedDetailPage from "@modules/Details/Recommended/Recommended";
 import React from "react";
 import {redirect} from "next/navigation";
 import useGetRecommendedDetailById from "@modules/Details/Recommended/useGetRecommendedDetailById";
+import Navbar from "@components/Navbar";
 
 const DetailPage = async ({params}: {params: {id: string}}) => {
   const {id} = params;
@@ -17,7 +18,12 @@ const DetailPage = async ({params}: {params: {id: string}}) => {
 
   const {data} = await useGetRecommendedDetailById(id);
 
-  return <RecommendedDetailPage data={data} />;
+  return (
+    <>
+      <Navbar />
+      <RecommendedDetailPage data={data} />
+    </>
+  );
 };
 
 export default DetailPage;

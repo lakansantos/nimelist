@@ -12,7 +12,7 @@ function scrollToTop() {
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-default_light sticky top-0 z-[101] h-[80px]">
+    <div className="navbar bg-default_light sticky top-0 z-[101] text-white h-[80px]">
       <ul className="flex flex-row justify-between h-full p-5">
         <li className="self-center">
           <Link href="/" scroll={false}>

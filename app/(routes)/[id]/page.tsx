@@ -1,6 +1,7 @@
 import {redirect} from "next/navigation";
 import Details from "@modules/Details/Details";
 import useGetDetail from "@modules/Details/useGetDetail";
+import Navbar from "@components/Navbar";
 
 type PageProps = {
   params: {
@@ -22,7 +23,12 @@ const Page = async ({params}: PageProps) => {
 
   const {data} = await useGetDetail(id);
 
-  return <Details data={data} />;
+  return (
+    <>
+      <Navbar />
+      <Details data={data} />
+    </>
+  );
 };
 
 export default Page;
