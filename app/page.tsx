@@ -1,42 +1,30 @@
 import Footer from "@components/Footer";
-import RecommendedAnime from "@modules/Anime/Recommended/RecommendedAnime";
-import TrendingAnime from "@modules/Anime/Trending/TrendingAnime";
 import useGetRecommendedAnime from "@modules/Anime/Recommended/useGetRecommendedAnime";
 import useGetTrendingAnime from "@modules/Anime/Trending/useGetTrendingAnime";
-import Navbar from "@components/Navbar";
-import Banner from "@modules/Anime/Banner/Banner";
+import Sidebar from "@components/Sidebar";
 import useGetAnime from "@modules/Anime/Banner/useGetAnime";
-import AnimeNoData from "@components/Anime/AnimeNoData";
+import Navbar from "@components/Navbar";
+import Anime from "@modules/Anime/Anime";
 
 export default async function Home() {
   const {data: trendingData} = await useGetTrendingAnime();
   const {data: recommendedData} = await useGetRecommendedAnime();
   const {data: animeData} = await useGetAnime();
 
-  const bothEmptyData =
-    (trendingData.length === 0 || !trendingData) &&
-    (recommendedData.length === 0 || !recommendedData);
+  const animeDataProps = {
+    animeData,
+    trendingData,
+    recommendedData,
+  };
 
   return (
-    <>
-      <div className="relative min-h-[calc(100vh-10%)] bg-default_blue text-white p-5 flex md:flex-row flex-col gap-5">
-        <Navbar />
-        <div className="flex flex-1 gap-5 flex-col min-h-[200px] h-fit overflow-hidden">
-          <Banner data={animeData} />
-          {bothEmptyData ? (
-            <AnimeNoData />
-          ) : (
-            <>
-              <TrendingAnime title="Trending" data={trendingData} />
-              <RecommendedAnime
-                title="Recommended for you"
-                data={recommendedData}
-              />
-            </>
-          )}
-        </div>
+    <div className="bg-default_blue text-white ">
+      <Navbar />
+      <div className="relative min-h-[calc(100vh-10%)] p-5 flex md:flex-row flex-col gap-5">
+        <Sidebar />
+        <Anime {...animeDataProps} />
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
