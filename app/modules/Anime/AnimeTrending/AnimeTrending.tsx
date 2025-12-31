@@ -19,8 +19,13 @@ const AnimeTrending = ({data}: {data: AnimeResponse}) => {
 
   const filteredData =
     current !== ANIME_FILTER_TYPES["all"]
-      ? data.filter((item) => item.attributes.showType === current)
-      : data;
+      ? data.filter((item) => {
+          return (
+            item.attributes.showType === current &&
+            Boolean(item.attributes.coverImage)
+          );
+        })
+      : data.filter((item) => Boolean(item.attributes.coverImage));
 
   const isDataEmpty = data.length === 0 || !data;
   return (

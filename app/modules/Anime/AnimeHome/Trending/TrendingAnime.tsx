@@ -15,7 +15,7 @@ type AnimeCardsContainerProps = {
   title: string;
 };
 
-const DATA_LIMIT = 10;
+const DATA_LIMIT = 20;
 const TrendingAnime = ({data, title}: AnimeCardsContainerProps) => {
   const {clicked, maxScroll, scroll, containerRef, handleScroll} =
     useTrendingScroll();

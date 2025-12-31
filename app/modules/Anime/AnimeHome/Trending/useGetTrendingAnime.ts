@@ -6,7 +6,7 @@ type AnimeDataResponse = {
 };
 
 const useGetTrendingAnime = async (): Promise<AnimeDataResponse> => {
-  const joinedURL = `${BASE_API_KITSU_URL}/trending/anime?limit=20`;
+  const joinedURL = `${BASE_API_KITSU_URL}/trending/anime?limit=30`;
   const response = await fetch(joinedURL);
 
   if (!response.ok) {
