@@ -2,12 +2,12 @@
 import React from "react";
 import {FaBookmark} from "react-icons/fa";
 import {MdLocalFireDepartment} from "react-icons/md";
-import {IoHome} from "react-icons/io5";
 import classNames from "classnames";
 import useSidebarScroll from "./useSidebarScroll";
+import {RiGalleryView2} from "react-icons/ri";
 
 const navItems = [
-  {label: "Home", icon: IoHome},
+  {label: "Home", icon: RiGalleryView2},
   {label: "Trending", icon: MdLocalFireDepartment},
   {label: "Saved", icon: FaBookmark},
 ];
@@ -55,7 +55,7 @@ const Sidebar = ({mounted, isDesktop, current, setCurrent}: SidebarProps) => {
             className="
       absolute bg-default_lightest rounded-xl
       transition-transform duration-300 ease-out
-      w-[80px] h-[50px] md:h-[100px]
+      w-[80px] h-[50px] md:h-[95px]
     "
             style={{
               transform: isDesktop

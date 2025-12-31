@@ -28,7 +28,7 @@ const Anime = (animeProps: AnimeProps) => {
       case 0:
         return <AnimeHome {...animeProps} />;
       case 1:
-        return <Trending />;
+        return <Trending data={animeProps.trendingData} />;
       case 2:
         return <Saved />;
       default:

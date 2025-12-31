@@ -15,6 +15,7 @@ type AnimeCardsContainerProps = {
   title: string;
 };
 
+const DATA_LIMIT = 10;
 const TrendingAnime = ({data, title}: AnimeCardsContainerProps) => {
   const {clicked, maxScroll, scroll, containerRef, handleScroll} =
     useTrendingScroll();
@@ -22,6 +23,7 @@ const TrendingAnime = ({data, title}: AnimeCardsContainerProps) => {
 
   if (data.length === 0 || !data) return <AnimeNoDataBySection />;
 
+  const trimmedData = data.slice(0, DATA_LIMIT);
   return (
     <div className="relative min-h-[200px] flex flex-col max-w-full">
       <div className="mb-5 flex items-center gap-1">
@@ -60,7 +62,7 @@ const TrendingAnime = ({data, title}: AnimeCardsContainerProps) => {
             }
           )}
         >
-          {data.map((item) => {
+          {trimmedData.map((item) => {
             return (
               <TrendingAnimeCard item={item} key={item.id} setLoad={setLoad} />
             );

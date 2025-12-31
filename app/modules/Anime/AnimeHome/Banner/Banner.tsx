@@ -12,10 +12,7 @@ import classNames from "classnames";
 import BannerSkeleton from "./BannerSkeleton";
 import {useRouter} from "next/navigation";
 
-const types = {
-  TV: "Series",
-  movie: "Movie",
-};
+import {ANIME_FILTER_TYPES} from "@app-types/animeFilters";
 
 const Banner = ({data}: {data: Anime[]}) => {
   const filteredData = data.filter(
@@ -40,7 +37,7 @@ const Banner = ({data}: {data: Anime[]}) => {
     showType,
   } = filteredData[currentIndex].attributes;
 
-  const type = types[showType];
+  const type = ANIME_FILTER_TYPES[showType];
 
   return (
     <>
@@ -68,7 +65,7 @@ const Banner = ({data}: {data: Anime[]}) => {
         />
 
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/60 z-10" />
+        <div className="absolute inset-0 bg-black/50 z-10" />
 
         {/* Fade bottom */}
         <div className="absolute bottom-0 left-0 w-full h-[32px] z-20 bg-gradient-to-t from-default_blue to-transparent" />
