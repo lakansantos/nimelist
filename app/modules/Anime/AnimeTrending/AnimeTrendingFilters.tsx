@@ -6,11 +6,13 @@ type AnimeTrendingFilter = (typeof NAV_ANIME_FILTER_TYPES)[number]["value"];
 type AnimeTrendingFiltersProps = {
   current: AnimeTrendingFilter;
   handleSelect: (value: AnimeTrendingFilter) => void;
+  dataLength: number;
 };
 
 const AnimeTrendingFilters = ({
   current,
   handleSelect,
+  dataLength,
 }: AnimeTrendingFiltersProps) => {
   return (
     <div className="flex flex-row mb-5 pl-2 gap-3">
@@ -29,7 +31,7 @@ const AnimeTrendingFilters = ({
             )}
             onClick={() => handleSelect(item.value)}
           >
-            {item.label}
+            {item.label} {selected && <span>{`(${dataLength})`}</span>}
           </button>
         );
       })}

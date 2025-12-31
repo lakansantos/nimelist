@@ -38,6 +38,7 @@ const AnimeTrending = ({data}: {data: AnimeResponse}) => {
               <AnimeTrendingFilters
                 current={current}
                 handleSelect={handleSelect}
+                dataLength={filteredData.length}
               />
               <div
                 className={cx("flex flex-col mb-6 max-w-full", {
