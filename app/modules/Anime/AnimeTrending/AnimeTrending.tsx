@@ -56,7 +56,7 @@ const AnimeTrending = ({data}: {data: AnimeResponse}) => {
                     "grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-4",
                     {
                       "lg:grid-cols-[repeat(auto-fit,minmax(400px,400px))]":
-                        filteredData.length === 2,
+                        filteredData.length <= 3,
                     }
                   )}
                 >

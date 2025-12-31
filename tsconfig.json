@@ -23,7 +23,7 @@
       "@constants/*": ["constants/*"],
       "@components/*": ["components/*"],
       "@fetches/*": ["fetches/*"],
-      "@hooks": ["hooks/*"],
+      "@hooks/*": ["hooks/*"],
       "@modules/*": ["modules/*"],
       "@app-types/*": ["types/*"],
       "@utils/*": ["utils/*"]
