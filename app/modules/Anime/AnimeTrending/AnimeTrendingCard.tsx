@@ -2,7 +2,7 @@ import {Anime} from "@app-types/anime";
 import useSave from "@hooks/useSave";
 import {extractYear} from "@utils/dates";
 import Image from "next/image";
-import React, {useState} from "react";
+import React from "react";
 
 import {MdBookmarkBorder, MdBookmark} from "react-icons/md";
 
