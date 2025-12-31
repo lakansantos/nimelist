@@ -45,7 +45,15 @@ const AnimeTrending = ({data}: {data: AnimeResponse}) => {
                   flex: load,
                 })}
               >
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-4">
+                <div
+                  className={cx(
+                    "grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-4",
+                    {
+                      "lg:grid-cols-[repeat(auto-fit,minmax(400px,400px))]":
+                        filteredData.length === 2,
+                    }
+                  )}
+                >
                   {filteredData.map((item, index) => (
                     <AnimeTrendingCard
                       item={item}
