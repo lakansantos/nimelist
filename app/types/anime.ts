@@ -117,3 +117,18 @@ export interface RelationshipLinks {
     related: string;
   };
 }
+
+export interface Genres {
+  id: string;
+  type: string;
+  links: {
+    self: string;
+  };
+  attributes: {
+    createdAt: string;
+    updatedAt: string;
+    name: string;
+    slug: string;
+    description: string;
+  };
+}

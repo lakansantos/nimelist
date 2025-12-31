@@ -1,6 +1,7 @@
 import {redirect} from "next/navigation";
 import Details from "@modules/Details/Details";
 import useGetDetail from "@modules/Details/useGetDetail";
+import useGetDetailGenresbyId from "@modules/Details/useGetDetailGenresbyId";
 import Navbar from "@components/Navbar";
 
 type PageProps = {
@@ -22,11 +23,14 @@ const Page = async ({params}: PageProps) => {
   }
 
   const {data} = await useGetDetail(id);
+  const {data: genreData} = await useGetDetailGenresbyId(id);
+
+  const propsData = {data, genreData};
 
   return (
     <div className="bg-default_blue">
       <Navbar />
-      <Details data={data} />
+      <Details {...propsData} />
     </div>
   );
 };
