@@ -14,16 +14,22 @@ const useRecommendationSave = (item?: RecommendedSavedAnime) => {
   const [saved, setSaved] = useState<RecommendedSavedAnime[]>([]);
   const [isSaved, setIsSaved] = useState(false);
 
+  // Load saved items from localStorage once
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) return;
-    const parsed: RecommendedSavedAnime[] = JSON.parse(stored);
-    setSaved(parsed);
-
-    if (item) {
-      setIsSaved(parsed.some((a) => a.id === item.id));
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (!stored) return;
+      const parsed: RecommendedSavedAnime[] = JSON.parse(stored);
+      setSaved(parsed);
+    } catch (error) {
+      console.error("Failed to parse saved recommendations:", error);
     }
-  }, [item]);
+  }, []); // empty dependency → runs once
+
+  useEffect(() => {
+    if (!item) return;
+    setIsSaved(saved.some((a) => a.id === item.id));
+  }, [item, saved]);
 
   const onSave = () => {
     if (!item) return;
