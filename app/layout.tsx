@@ -12,6 +12,14 @@ export const metadata: Metadata = {
   title: "Nimelist",
   description:
     "An anime website that tracks latest, trending and recommended anime for you to enjoy.",
+  icons: {
+    icon: [
+      {
+        url: "/hat.png",
+        type: "image/png",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
