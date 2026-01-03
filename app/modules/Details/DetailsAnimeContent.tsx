@@ -146,7 +146,7 @@ const DetailsAnimeContent = () => {
           <h3 className="text-gray-400 text-2xl">Trailer</h3>
           <div className="border-b my-2 border-gray-500/50" />
           <iframe
-            className="w-full lg:w-1/2"
+            className="w-full md:w-full lg:w-1/2"
             height="315"
             src={`https://www.youtube.com/embed/${youtubeVideoId}`}
           ></iframe>
