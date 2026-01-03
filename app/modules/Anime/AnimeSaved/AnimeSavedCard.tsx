@@ -12,7 +12,7 @@ const AnimeSavedCard = ({item, onRemove}: Props) => {
   return (
     <a
       href={`/${item.id}`}
-      className="relative h-[200px] min-w-[400px] w-full overflow-hidden group"
+      className="relative h-[200px] md:min-w-[400px] w-full overflow-hidden group"
     >
       {/* Image */}
       <div className="relative h-full w-full">
