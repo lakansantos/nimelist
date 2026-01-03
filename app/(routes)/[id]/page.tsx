@@ -5,6 +5,7 @@ import useGetDetail from "@modules/Details/useGetDetail";
 import useGetDetailGenresbyId from "@modules/Details/useGetDetailGenresbyId";
 import Navbar from "@components/Navbar";
 import Footer from "@components/Footer";
+import {TbError404} from "react-icons/tb";
 
 type PageProps = {
   params: {
@@ -22,15 +23,23 @@ const Page = async ({params}: PageProps) => {
   const {data} = await useGetDetail(id);
   const {data: genreData} = await useGetDetailGenresbyId(id);
 
-  if (!data || !data.attributes || data === null) {
-    return "No Data";
-  }
+  const isDataEmpty = !data || !data.attributes || data === null;
+
   return (
     <div className="bg-default_blue">
       <Navbar />
-      <DetailsProvider anime={data} genres={genreData ?? null}>
-        <Details />
-      </DetailsProvider>
+      {isDataEmpty ? (
+        <div className="h-[80vh] flex flex-col justify-center items-center text-white gap-3">
+          <TbError404 className="text-5xl" />
+          <span>No results found</span>
+        </div>
+      ) : (
+        <>
+          <DetailsProvider anime={data} genres={genreData ?? null}>
+            <Details />
+          </DetailsProvider>
+        </>
+      )}
       <Footer />
     </div>
   );

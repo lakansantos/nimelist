@@ -2,11 +2,13 @@ import {Genres} from "@app-types/anime";
 import React from "react";
 
 const DetailsGenre = ({data}: {data?: Genres[] | null}) => {
-  if (!data || data.length === 0) {
+  const isDataEmpty = !data || data === null || data.length === 0;
+
+  if (isDataEmpty) {
     return;
   }
   return (
-    <ul className="flex gap-2 flex-wrap mt-2 justify-">
+    <ul className="flex gap-2 flex-wrap">
       {data.map((item) => {
         const {id, attributes} = item;
         return (
