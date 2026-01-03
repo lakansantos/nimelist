@@ -15,6 +15,11 @@ const STORAGE_KEY = "saved_anime";
 const useSave = (item?: SavedAnime) => {
   const [isSaved, setIsSaved] = useState(false);
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   useEffect(() => {
     if (!item?.id) {
       setIsSaved(false);
@@ -54,6 +59,7 @@ const useSave = (item?: SavedAnime) => {
   return {
     isSaved,
     onSave,
+    mounted,
   };
 };
 

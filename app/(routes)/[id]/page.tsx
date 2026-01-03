@@ -4,6 +4,7 @@ import {DetailsProvider} from "@modules/Details/DetailsContext";
 import useGetDetail from "@modules/Details/useGetDetail";
 import useGetDetailGenresbyId from "@modules/Details/useGetDetailGenresbyId";
 import Navbar from "@components/Navbar";
+import Footer from "@components/Footer";
 
 type PageProps = {
   params: {
@@ -30,6 +31,7 @@ const Page = async ({params}: PageProps) => {
       <DetailsProvider anime={data} genres={genreData ?? null}>
         <Details />
       </DetailsProvider>
+      <Footer />
     </div>
   );
 };

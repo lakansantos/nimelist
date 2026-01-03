@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import {useState} from "react";
 import {
   FaHeart,
   FaChartLine,
@@ -17,12 +16,14 @@ import DetailsGenre from "./DetailsGenre";
 import {dateFormat} from "@utils/dates";
 import {ANIME_FILTER_TYPES} from "@app-types/animeFilters";
 import useSave from "@hooks/useSave";
+import useDetailsAnimeContent from "./useDetailsAnimeContent";
+import classNames from "classnames";
 
 const MAX_CHARS = 300;
 
 const DetailsAnimeContent = () => {
   const {anime, genres} = useDetails();
-  const [expanded, setExpanded] = useState(false);
+  const {expanded, setExpanded, load, setLoad} = useDetailsAnimeContent();
 
   const {
     averageRating,
@@ -115,19 +116,33 @@ const DetailsAnimeContent = () => {
     image: coverImage,
   };
 
-  const {isSaved, onSave} = useSave(savedItemDetails);
+  const {isSaved, onSave, mounted} = useSave(savedItemDetails);
 
   return (
     <div className="main-container min-h-[50vh] flex-col-reverse flex md:flex-row p-5">
       {/* LEFT CONTAINER */}
       <div className="relative w-full md:w-[300px]">
-        <div className="static md:absolute top-[-20%] p-5 h-[700px] w-full bg-default_light flex flex-col">
+        <div className="static md:absolute top-[-140px] p-5 h-[700px] w-full bg-default_light flex flex-col">
           <div className="relative h-[200px] w-full mb-2">
             <Image
               src={posterImage?.original || "/placeholder.jpg"}
               fill
               alt={`${animeTitle} poster`}
-              className="object-cover"
+              className={classNames("object-cover", {
+                "opacity-0": !load,
+                "opacity-100": load,
+              })}
+              onLoad={() => setLoad(true)}
+            />
+            {/*Skeleton for image left container */}
+            <div
+              className={classNames(
+                "relative h-[200px] w-full bg-gray-700 rounded-md z-[100]",
+                {
+                  "opacity-0": load,
+                  "opacity-100": !load,
+                }
+              )}
             />
           </div>
 
@@ -145,17 +160,27 @@ const DetailsAnimeContent = () => {
 
             <DetailsGenre data={genres} />
 
-            <button
-              onClick={onSave}
-              className="bg-sky-800 text-white flex justify-center items-center w-full gap-2 p-3 hover:bg-sky-700 transition"
-            >
-              {isSaved ? (
-                <MdBookmark className="text-2xl" />
-              ) : (
-                <MdBookmarkBorder className="text-2xl" />
-              )}
-              {isSaved ? "Saved" : "Add to List"}
-            </button>
+            {mounted ? (
+              <button
+                onClick={onSave}
+                className="bg-sky-800 text-white flex justify-center items-center w-full gap-2 p-3 hover:bg-sky-700 transition"
+              >
+                {isSaved ? (
+                  <>
+                    <MdBookmark className="text-2xl" />
+                    Saved
+                  </>
+                ) : (
+                  <>
+                    <MdBookmarkBorder className="text-2xl" />
+                    Add to List
+                  </>
+                )}
+              </button>
+            ) : (
+              // Skeleton button
+              <div className="h-12 w-full bg-gray-600 rounded-md animate-pulse" />
+            )}
           </div>
         </div>
       </div>
@@ -165,7 +190,7 @@ const DetailsAnimeContent = () => {
         <h2 className="text-4xl text-orange-400">{animeTitle}</h2>
 
         {/* Synopsis */}
-        <div className="min-h-[275px]">
+        <div>
           <h3 className="text-gray-400 text-2xl">Synopsis</h3>
           <div className="border-b my-2 border-gray-500/50" />
 
@@ -182,20 +207,21 @@ const DetailsAnimeContent = () => {
 
           <div className="border-b mt-2 border-gray-500/50" />
         </div>
-
         {/* Trailer */}
-        {youtubeVideoId && (
-          <div>
-            <h3 className="text-gray-400 text-2xl">Trailer</h3>
-            <div className="border-b my-2 border-gray-500/50" />
+        <div className="md:h-[400px]">
+          <h3 className="text-gray-400 text-2xl">Trailer</h3>
+          <div className="border-b my-2 border-gray-500/50" />
+          {youtubeVideoId ? (
             <iframe
               className="w-full lg:w-1/2"
               height="315"
               src={`https://www.youtube.com/embed/${youtubeVideoId}`}
               allowFullScreen
             />
-          </div>
-        )}
+          ) : (
+            <div className="text-gray-300">No trailer at the moment</div>
+          )}
+        </div>
       </div>
     </div>
   );

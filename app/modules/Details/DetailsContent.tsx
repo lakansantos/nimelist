@@ -3,7 +3,7 @@ import DetailsAnimeOtherContent from "./DetailsAnimeOtherContent";
 
 const DetailsContent = () => {
   return (
-    <div className="below-container w-full flex-1">
+    <div className="w-full flex-1">
       <DetailsAnimeContent />
       <DetailsAnimeOtherContent />
     </div>
