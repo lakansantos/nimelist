@@ -10,6 +10,8 @@ const AnimeSaved = () => {
 
   const isDataEmpty = !savedData || savedData.length === 0;
 
+  const sortedData = savedData.toReversed();
+
   return (
     <section className="w-full">
       <AnimeSavedBanner />
@@ -26,11 +28,11 @@ const AnimeSaved = () => {
                     "grid grid-cols-[repeat(auto-fit,minmax(auto,1fr))] gap-4 md:grid-cols-[repeat(auto-fit,minmax(400px,1fr))] ",
                     {
                       "lg:grid-cols-[repeat(auto-fit,minmax(400px,400px))]":
-                        savedData.length <= 3,
+                        sortedData.length <= 3,
                     }
                   )}
                 >
-                  {savedData.map((item, index) => (
+                  {sortedData.map((item, index) => (
                     <AnimeSavedCard
                       item={item}
                       key={`${index}-${item.id}`}
