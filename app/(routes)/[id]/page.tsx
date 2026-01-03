@@ -21,10 +21,13 @@ const Page = async ({params}: PageProps) => {
   const {data} = await useGetDetail(id);
   const {data: genreData} = await useGetDetailGenresbyId(id);
 
+  if (!data || !data.attributes || data === null) {
+    return "No Data";
+  }
   return (
     <div className="bg-default_blue">
       <Navbar />
-      <DetailsProvider anime={data ?? null} genres={genreData ?? null}>
+      <DetailsProvider anime={data} genres={genreData ?? null}>
         <Details />
       </DetailsProvider>
     </div>

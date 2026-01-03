@@ -1,3 +1,4 @@
+"use client";
 import {ANIME_FILTER_TYPES, ANIME_STATUS_TYPE} from "@app-types/animeFilters";
 import {useDetails} from "./DetailsContext";
 import {dateFormat} from "@utils/dates";
@@ -19,7 +20,10 @@ const DetailsAnimeOtherContent = () => {
   const durationText =
     duration && episodeCount
       ? `${duration / episodeCount} min/ep`
-      : `${duration} minutes`;
+      : duration
+      ? `${duration} minutes`
+      : "N/A";
+
   const animeInfo = [
     {label: "Japanese Title", value: titles.ja_jp},
     {label: "Status", value: ANIME_STATUS_TYPE[status]},

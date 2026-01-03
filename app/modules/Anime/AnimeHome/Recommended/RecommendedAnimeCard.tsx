@@ -51,7 +51,9 @@ const RecommendedAnimeCard = ({
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          onSave();
+          {
+            onSave && onSave();
+          }
         }}
       >
         {isSaved ? <MdBookmark size={24} /> : <MdBookmarkBorder size={24} />}
