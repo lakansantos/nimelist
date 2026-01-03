@@ -23,7 +23,7 @@ const AnimeSaved = () => {
               <div className="flex flex-col mb-6 max-w-full">
                 <div
                   className={cx(
-                    "grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-4",
+                    "grid grid-cols-[repeat(auto-fit,minmax(auto,1fr))] gap-4 md:grid-cols-[repeat(auto-fit,minmax(400px,1fr))] ",
                     {
                       "lg:grid-cols-[repeat(auto-fit,minmax(400px,400px))]":
                         savedData.length <= 3,
