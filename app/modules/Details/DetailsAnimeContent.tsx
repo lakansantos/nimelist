@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import {
   FaHeart,
@@ -12,6 +13,9 @@ import {useDetails} from "./DetailsContext";
 import DetailsGenre from "./DetailsGenre";
 import {dateFormat} from "@utils/dates";
 import {MdBookmarkBorder} from "react-icons/md";
+import {useState} from "react";
+
+const MAX_CHARS = 300;
 
 const DetailsAnimeContent = () => {
   const {anime, genres} = useDetails();
@@ -27,19 +31,22 @@ const DetailsAnimeContent = () => {
     endDate,
     status,
     canonicalTitle,
+    titles,
     synopsis,
     youtubeVideoId,
   } = anime?.attributes || {};
 
+  const [expanded, setExpanded] = useState(false);
+
   const detailsContent = [
     {
       label: "Rating",
-      value: `${averageRating}%`,
+      value: averageRating ? `${averageRating}%` : "-",
       icon: <FaHeart className="text-yellow-400" />,
     },
     {
       label: "Rank",
-      value: `#${ratingRank}`,
+      value: ratingRank ? `#${ratingRank}` : "-",
       icon: <FaChartLine className="text-emerald-400" />,
     },
     {
@@ -64,12 +71,19 @@ const DetailsAnimeContent = () => {
     },
     {
       label: "Age rating",
-      value: `${ageRating} (${ageRatingGuide})`,
+      value: `${ageRating} ${ageRatingGuide ? `(${ageRatingGuide})` : ""} `,
       icon: <FaUserShield className="text-red-400" />,
     },
   ];
 
   if (!anime) return;
+
+  const isLong = synopsis && synopsis?.length > MAX_CHARS;
+  const displayedText = expanded
+    ? synopsis
+    : synopsis?.slice(0, MAX_CHARS) + (isLong ? "..." : "");
+
+  const animeTitle = titles?.en ? titles.en : canonicalTitle;
   return (
     <div className="main-container min-h-[50vh] flex-col-reverse flex md:flex-row p-5">
       <div className="relative container-1 w-full md:w-[300px]">
@@ -109,12 +123,22 @@ const DetailsAnimeContent = () => {
 
       <div className="flex-1 flex flex-col gap-2 p-5">
         <div>
-          <h2 className="text-4xl text-orange-400">{canonicalTitle}</h2>
+          <h2 className="text-4xl text-orange-400">{animeTitle}</h2>
         </div>
-        <div>
-          <h3 className="text-gray-400 text-2xl">Sypnosis</h3>
+        <div className="min-h-[275px]">
+          <h3 className="text-gray-400 text-2xl">Synopsis</h3>
           <div className="border-b my-2 border-gray-500/50" />
-          <p>{synopsis}</p>
+
+          <p className="text-gray-300 leading-relaxed">{displayedText}</p>
+
+          {isLong && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="mt-2 text-sky-400 hover:text-sky-300 transition-colors"
+            >
+              {expanded ? "See less" : "See more"}
+            </button>
+          )}
 
           <div className="border-b mt-2 border-gray-500/50" />
         </div>
