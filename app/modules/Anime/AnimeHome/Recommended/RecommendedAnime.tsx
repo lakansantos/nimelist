@@ -1,17 +1,16 @@
 "use client";
-import {AnimeData} from "@app-types/topAnimeData";
 import React from "react";
 import RecommendedCardSkeleton from "./RecommendedCardSkeleton";
 import useLoad from "./useLoad";
 import cx from "classnames";
-import removeDuplicateDataByTitle from "@utils/removeDuplicateDataByTitle";
 import AnimeNoDataBySection from "@components/Anime/AnimeNoDataBySection";
 import RecommendedAnimeCard from "./RecommendedAnimeCard";
 import useRecommendedInfiniteScroll from "./useRecommendedInfiniteScroll";
 import {IoMdStar} from "react-icons/io";
+import {Anime} from "@app-types/anime";
 
 type AnimeCardsContainerProps = {
-  data: AnimeData[];
+  data: Anime[];
   title: string;
 };
 
@@ -21,17 +20,17 @@ const LOAD_INCREMENT = 10; // how many more to load per scroll
 const RecommendedAnime = ({data, title}: AnimeCardsContainerProps) => {
   const {load, setLoad} = useLoad();
 
-  const filteredData = removeDuplicateDataByTitle(data);
-
   const {visibleCount} = useRecommendedInfiniteScroll(
-    filteredData,
+    data,
     INITIAL_COUNT,
     LOAD_INCREMENT
   );
 
   if (!data || data.length === 0) return <AnimeNoDataBySection />;
 
-  const visibleData = filteredData.slice(0, visibleCount);
+  const visibleData = data
+    .filter((item) => Boolean(item.attributes.posterImage))
+    .slice(0, visibleCount);
 
   return (
     <>
@@ -51,7 +50,7 @@ const RecommendedAnime = ({data, title}: AnimeCardsContainerProps) => {
             <RecommendedAnimeCard
               item={item}
               setLoad={setLoad}
-              key={`${index}-${item.mal_id}`}
+              key={`${index}-${item}`}
             />
           ))}
         </div>

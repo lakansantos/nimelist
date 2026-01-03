@@ -45,7 +45,7 @@ export interface AnimeAttributes {
   ageRatingGuide: string;
 
   subtype: string;
-  status: string;
+  status: "current" | "finished";
   tba: string | null;
 
   posterImage: ImageSet;

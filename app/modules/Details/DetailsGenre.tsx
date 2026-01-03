@@ -6,10 +6,14 @@ const DetailsGenre = ({data}: {data?: Genres[] | null}) => {
     return;
   }
   return (
-    <ul>
+    <ul className="flex gap-2 flex-wrap mt-2 justify-">
       {data.map((item) => {
         const {id, attributes} = item;
-        return <li key={id}>{attributes.name}</li>;
+        return (
+          <li key={id} className="border min-w-[50px] text-center p-1 text-xs">
+            {attributes.name}
+          </li>
+        );
       })}
     </ul>
   );

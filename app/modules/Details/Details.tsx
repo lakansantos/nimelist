@@ -1,20 +1,23 @@
-import {Anime, Genres} from "@app-types/anime";
+"use client";
+
 import React from "react";
-import DetailsGenre from "./DetailsGenre";
+import DetailsBanner from "./DetailsBanner";
+import DetailsContent from "./DetailsContent";
+import {useDetails} from "./DetailsContext";
 
-type DetailProps = {data?: Anime | null; genreData?: Genres[] | null};
-const Details = ({data, genreData}: DetailProps) => {
-  if (data === null || !data) {
-    return "No data";
+const Details = () => {
+  const {anime} = useDetails();
+
+  if (!anime) {
+    return <div>No data</div>;
   }
-  const {attributes} = data;
-
-  const {canonicalTitle} = attributes;
 
   return (
-    <div className="relative min-h-[calc(100vh-10%)] bg-default_blue text-white p-5 flex md:flex-row flex-col gap-5">
-      {canonicalTitle}
-      <DetailsGenre data={genreData} />
+    <div className="relative min-h-screen h-fit bg-default_blue text-white flex md:flex-row flex-col gap-5">
+      <div className="w-full flex flex-col">
+        <DetailsBanner />
+        <DetailsContent />
+      </div>
     </div>
   );
 };

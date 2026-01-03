@@ -1,5 +1,6 @@
 import {redirect} from "next/navigation";
 import Details from "@modules/Details/Details";
+import {DetailsProvider} from "@modules/Details/DetailsContext";
 import useGetDetail from "@modules/Details/useGetDetail";
 import useGetDetailGenresbyId from "@modules/Details/useGetDetailGenresbyId";
 import Navbar from "@components/Navbar";
@@ -13,24 +14,19 @@ type PageProps = {
 const Page = async ({params}: PageProps) => {
   const {id} = params;
 
-  // check if id is NOT a number
-  const isNotNumber = Number.isNaN(Number(id));
-
-  if (!id || isNotNumber) {
-    if (isNotNumber) {
-      redirect("/");
-    }
+  if (!id || Number.isNaN(Number(id))) {
+    redirect("/");
   }
 
   const {data} = await useGetDetail(id);
   const {data: genreData} = await useGetDetailGenresbyId(id);
 
-  const propsData = {data, genreData};
-
   return (
     <div className="bg-default_blue">
       <Navbar />
-      <Details {...propsData} />
+      <DetailsProvider anime={data ?? null} genres={genreData ?? null}>
+        <Details />
+      </DetailsProvider>
     </div>
   );
 };

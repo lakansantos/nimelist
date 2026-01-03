@@ -13,7 +13,7 @@ interface Props {
 const AnimeSavedRecommendationCard = ({item, onRemove}: Props) => {
   return (
     <div className="relative group w-[400px] ">
-      <a href={`/recommended/${item.id}`} className="w-full block">
+      <a href={`/${item.id}`} className="w-full block">
         <div className="relative w-full h-[400px] rounded-lg overflow-hidden">
           <Image
             fill

@@ -1,44 +1,46 @@
 "use client";
 
-import {AnimeData} from "@app-types/topAnimeData";
 import Image from "next/image";
 import React from "react";
 import {MdBookmark, MdBookmarkBorder} from "react-icons/md";
-import useRecommendationSave, {
-  RecommendedSavedAnime,
-} from "./useRecommendationSave";
+import {Anime} from "@app-types/anime";
+import useSave from "@hooks/useSave";
 
 const RecommendedAnimeCard = ({
   item,
   setLoad,
 }: {
-  item: AnimeData;
+  item: Anime;
   setLoad: (load: boolean) => void;
 }) => {
-  const saveItem: RecommendedSavedAnime = {
-    id: item.entry[0].mal_id,
-    title: item.entry[0].title,
-    image: item.entry[0].images.jpg.large_image_url,
+  const {attributes} = item || {};
+
+  const {canonicalTitle, coverImage, startDate, posterImage} = attributes;
+  const savedItemDetails = {
+    title: canonicalTitle,
+    id: item.id,
+    year: startDate,
+    image: coverImage,
   };
 
-  const {isSaved, onSave} = useRecommendationSave(saveItem);
+  const {isSaved, onSave} = useSave(savedItemDetails);
 
   return (
     <div className="relative group w-full">
-      <a href={`/recommended/${item.entry[0].mal_id}`} className="w-full block">
+      <a href={`/${item.id}`} className="w-full block">
         <div className="relative w-full h-[400px] rounded-lg overflow-hidden">
           <Image
             fill
             sizes="(max-width: 640px) 100vw, 300px"
             priority
             onLoad={() => setLoad(true)}
-            src={item.entry[0].images.jpg.large_image_url}
-            alt={`${item.entry[0].title} cover`}
+            src={posterImage.original}
+            alt={`${canonicalTitle} cover`}
             className="object-cover cursor-pointer scale-100 hover:scale-110 transition-transform duration-300"
           />
         </div>
         <p className="mt-2 text-white text-sm overflow-hidden whitespace-nowrap text-ellipsis leading-snug">
-          {item.entry[0].title}
+          {canonicalTitle}
         </p>
       </a>
 

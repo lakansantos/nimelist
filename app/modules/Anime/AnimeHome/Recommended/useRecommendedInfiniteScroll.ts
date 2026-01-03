@@ -1,8 +1,8 @@
-import {AnimeData} from "@app-types/topAnimeData";
+import {Anime} from "@app-types/anime";
 import {useEffect, useState} from "react";
 
 const useRecommendedInfiniteScroll = (
-  filteredData: AnimeData[],
+  filteredData: Anime[],
   INITIAL_COUNT: number,
   LOAD_INCREMENT: number
 ) => {
