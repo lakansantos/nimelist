@@ -1,15 +1,13 @@
 "use client";
-import {Anime} from "@app-types/anime";
 import Image from "next/image";
 import React from "react";
-import useLoadDetails from "./useLoadDetails";
+import {useDetails} from "./DetailsContext";
 
-const DetailsBanner = ({data}: {data: Anime}) => {
-  const {coverImage} = data.attributes;
+const DetailsBanner = () => {
+  const {anime} = useDetails();
 
-  const {load, setLoad} = useLoadDetails();
-
-  console.log("load", load);
+  if (!anime) return null;
+  const {coverImage} = anime.attributes;
 
   return (
     <div
@@ -18,6 +16,8 @@ const DetailsBanner = ({data}: {data: Anime}) => {
   h-[25vh]
   sm:h-[35vh]
   md:h-[55vh]
+  border-b-2
+  border-white/60
 "
     >
       {/* Background image */}
@@ -25,7 +25,6 @@ const DetailsBanner = ({data}: {data: Anime}) => {
         src={coverImage.original}
         alt="Banner"
         fill
-        onLoad={() => setLoad(true)}
         priority
         sizes="100vw"
         className="
