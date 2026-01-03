@@ -5,7 +5,7 @@ const DetailsGenre = ({data}: {data?: Genres[] | null}) => {
   const isDataEmpty = !data || data === null || data.length === 0;
 
   if (isDataEmpty) {
-    return <div className="flex gap-2 flex-wrap mt-2">No Genre available</div>;
+    return;
   }
   return (
     <ul className="flex gap-2 flex-wrap">
