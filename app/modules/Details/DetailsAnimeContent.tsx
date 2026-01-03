@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import {
   FaHeart,
@@ -8,22 +9,25 @@ import {
   FaCalendarAlt,
   FaUserShield,
 } from "react-icons/fa";
+import {MdBookmark, MdBookmarkBorder} from "react-icons/md";
 
 import {useDetails} from "./DetailsContext";
 import DetailsGenre from "./DetailsGenre";
 import {dateFormat} from "@utils/dates";
-import {MdBookmarkBorder} from "react-icons/md";
-import {useState} from "react";
 import {ANIME_FILTER_TYPES} from "@app-types/animeFilters";
+import useSave from "@hooks/useSave";
+import useDetailsAnimeContent from "./useDetailsAnimeContent";
+import classNames from "classnames";
 
 const MAX_CHARS = 300;
 
 const DetailsAnimeContent = () => {
   const {anime, genres} = useDetails();
+  const {expanded, setExpanded, load, setLoad} = useDetailsAnimeContent();
 
   const {
     averageRating,
-    episodeLength: duration,
+    episodeLength,
     episodeCount,
     ratingRank,
     ageRating,
@@ -36,18 +40,35 @@ const DetailsAnimeContent = () => {
     synopsis,
     showType,
     youtubeVideoId,
+    posterImage,
+    coverImage,
   } = anime?.attributes || {};
 
-  const [expanded, setExpanded] = useState(false);
+  // -----------------------------
+  // Safe derived values
+  // -----------------------------
+  const safeSynopsis = synopsis ?? "";
+  const isLong = safeSynopsis.length > MAX_CHARS;
 
-  let durationText = "";
+  const displayedText = expanded
+    ? safeSynopsis
+    : safeSynopsis.slice(0, MAX_CHARS) + (isLong ? "..." : "");
+
+  const animeTitle = titles?.en || canonicalTitle || "Untitled";
 
   const isMovie = showType === ANIME_FILTER_TYPES["movie"];
-  if (episodeCount === 1 && isMovie) {
-    durationText = `${duration} minutes`;
-  } else {
-    durationText = `${duration} min/ep`;
+
+  let durationText = "-";
+  if (episodeLength) {
+    durationText =
+      episodeCount === 1 && isMovie
+        ? `${episodeLength} minutes`
+        : `${episodeLength} min/ep`;
   }
+
+  // -----------------------------
+  // Details list
+  // -----------------------------
   const detailsContent = [
     {
       label: "Rating",
@@ -61,7 +82,7 @@ const DetailsAnimeContent = () => {
     },
     {
       label: "Episodes",
-      value: episodeCount || "Unknown",
+      value: episodeCount ?? "Unknown",
       icon: <FaListUl className="text-sky-400" />,
     },
     {
@@ -78,32 +99,54 @@ const DetailsAnimeContent = () => {
     },
     {
       label: "Age rating",
-      value: `${ageRating} ${ageRatingGuide ? `(${ageRatingGuide})` : ""} `,
+      value: ageRating
+        ? `${ageRating}${ageRatingGuide ? ` (${ageRatingGuide})` : ""}`
+        : "-",
       icon: <FaUserShield className="text-red-400" />,
     },
   ];
 
-  if (!anime) return;
+  // -----------------------------
+  // Save logic
+  // -----------------------------
+  const savedItemDetails = {
+    title: canonicalTitle,
+    id: anime?.id,
+    year: startDate,
+    image: coverImage,
+  };
 
-  const isLong = synopsis && synopsis?.length > MAX_CHARS;
-  const displayedText = expanded
-    ? synopsis
-    : synopsis?.slice(0, MAX_CHARS) + (isLong ? "..." : "");
+  const {isSaved, onSave, mounted} = useSave(savedItemDetails);
 
-  const animeTitle = titles?.en ? titles.en : canonicalTitle;
   return (
     <div className="main-container min-h-[50vh] flex-col-reverse flex md:flex-row p-5">
-      <div className="relative container-1 w-full md:w-[300px]">
-        <div className="static flex flex-col top-[-20%] p-5 h-[700px] w-full bg-default_light md:absolute">
-          <div className="image-container relative h-[200px] w-full">
+      {/* LEFT CONTAINER */}
+      <div className="relative w-full md:w-[300px]">
+        <div className="static md:absolute top-[-140px] p-5 h-[700px] w-full bg-default_light flex flex-col">
+          <div className="relative h-[200px] w-full mb-2">
             <Image
-              src={anime.attributes.posterImage.original}
+              src={posterImage?.original || "/placeholder.jpg"}
               fill
-              alt={`${anime.attributes.canonicalTitle} image`}
-              className="object-cover"
+              alt={`${animeTitle} poster`}
+              className={classNames("object-cover", {
+                "opacity-0": !load,
+                "opacity-100": load,
+              })}
+              onLoad={() => setLoad(true)}
+            />
+            {/*Skeleton for image left container */}
+            <div
+              className={classNames(
+                "relative h-[200px] w-full bg-gray-700 rounded-md z-[100]",
+                {
+                  "opacity-0": load,
+                  "opacity-100": !load,
+                }
+              )}
             />
           </div>
-          <div className="details-container flex flex-col gap-5 flex-1 mt-2">
+
+          <div className="flex flex-col gap-5 flex-1 mt-2">
             {detailsContent.map(({label, value, icon}) => (
               <div key={label} className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
@@ -111,28 +154,43 @@ const DetailsAnimeContent = () => {
                   <span className="font-medium text-sm">{label}:</span>
                   <span className="text-gray-300 text-sm">{value}</span>
                 </div>
-
                 <div className="border-b border-gray-500/50" />
               </div>
             ))}
 
             <DetailsGenre data={genres} />
-            <div>
-              <button className="bg-sky-800 text-white flex justify-center items-center w-full gap-2 p-3">
-                <MdBookmarkBorder className="text-4xl" /> Add to List
+
+            {mounted ? (
+              <button
+                onClick={onSave}
+                className="bg-sky-800 text-white flex justify-center items-center w-full gap-2 p-3 hover:bg-sky-700 transition"
+              >
+                {isSaved ? (
+                  <>
+                    <MdBookmark className="text-2xl" />
+                    Saved
+                  </>
+                ) : (
+                  <>
+                    <MdBookmarkBorder className="text-2xl" />
+                    Add to List
+                  </>
+                )}
               </button>
-            </div>
+            ) : (
+              // Skeleton button
+              <div className="h-12 w-full bg-gray-600 rounded-md animate-pulse" />
+            )}
           </div>
         </div>
       </div>
 
-      {/* Right Container */}
+      {/* RIGHT CONTAINER */}
+      <div className="flex-1 flex flex-col gap-4 p-5">
+        <h2 className="text-4xl text-orange-400">{animeTitle}</h2>
 
-      <div className="flex-1 flex flex-col gap-2 p-5">
+        {/* Synopsis */}
         <div>
-          <h2 className="text-4xl text-orange-400">{animeTitle}</h2>
-        </div>
-        <div className="min-h-[275px]">
           <h3 className="text-gray-400 text-2xl">Synopsis</h3>
           <div className="border-b my-2 border-gray-500/50" />
 
@@ -149,14 +207,20 @@ const DetailsAnimeContent = () => {
 
           <div className="border-b mt-2 border-gray-500/50" />
         </div>
-        <div>
+        {/* Trailer */}
+        <div className="md:h-[400px]">
           <h3 className="text-gray-400 text-2xl">Trailer</h3>
           <div className="border-b my-2 border-gray-500/50" />
-          <iframe
-            className="w-full md:w-full lg:w-1/2"
-            height="315"
-            src={`https://www.youtube.com/embed/${youtubeVideoId}`}
-          ></iframe>
+          {youtubeVideoId ? (
+            <iframe
+              className="w-full lg:w-1/2"
+              height="315"
+              src={`https://www.youtube.com/embed/${youtubeVideoId}`}
+              allowFullScreen
+            />
+          ) : (
+            <div className="text-gray-300">No trailer at the moment</div>
+          )}
         </div>
       </div>
     </div>

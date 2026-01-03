@@ -56,7 +56,9 @@ const AnimeTrendingCard = ({
         onClick={(e) => {
           e.preventDefault(); // prevent <a> navigation
           e.stopPropagation();
-          onSave();
+          {
+            onSave && onSave();
+          }
         }}
       >
         {isSaved ? (

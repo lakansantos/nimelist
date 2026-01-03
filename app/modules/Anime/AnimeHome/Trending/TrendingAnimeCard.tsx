@@ -51,7 +51,9 @@ const TrendingAnimeCard = ({
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          onSave();
+          {
+            onSave && onSave();
+          }
         }}
         className="absolute top-3 right-3 z-30 text-white hover:text-yellow-400 p-1 rounded-full bg-black/40 backdrop-blur-sm"
       >

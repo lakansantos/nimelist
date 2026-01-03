@@ -4,6 +4,7 @@ import {DetailsProvider} from "@modules/Details/DetailsContext";
 import useGetDetail from "@modules/Details/useGetDetail";
 import useGetDetailGenresbyId from "@modules/Details/useGetDetailGenresbyId";
 import Navbar from "@components/Navbar";
+import Footer from "@components/Footer";
 
 type PageProps = {
   params: {
@@ -21,12 +22,16 @@ const Page = async ({params}: PageProps) => {
   const {data} = await useGetDetail(id);
   const {data: genreData} = await useGetDetailGenresbyId(id);
 
+  if (!data || !data.attributes || data === null) {
+    return "No Data";
+  }
   return (
     <div className="bg-default_blue">
       <Navbar />
-      <DetailsProvider anime={data ?? null} genres={genreData ?? null}>
+      <DetailsProvider anime={data} genres={genreData ?? null}>
         <Details />
       </DetailsProvider>
+      <Footer />
     </div>
   );
 };
