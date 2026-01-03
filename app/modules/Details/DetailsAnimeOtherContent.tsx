@@ -38,7 +38,7 @@ const DetailsAnimeOtherContent = () => {
     <div className="other-details-container h-fit w-full p-10">
       <h3>Other Details</h3>
       <div className="border-b my-2 border-gray-500/50" />
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {animeInfo.map(({label, value}) => (
           <div key={label} className="border-b border-white/10 pb-2">
             <p className="text-xs text-gray-400">{label}</p>

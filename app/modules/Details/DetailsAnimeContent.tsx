@@ -14,7 +14,6 @@ import {MdBookmark, MdBookmarkBorder} from "react-icons/md";
 import {useDetails} from "./DetailsContext";
 import DetailsGenre from "./DetailsGenre";
 import {dateFormat} from "@utils/dates";
-import {ANIME_FILTER_TYPES} from "@app-types/animeFilters";
 import useSave from "@hooks/useSave";
 import useDetailsAnimeContent from "./useDetailsAnimeContent";
 import classNames from "classnames";
@@ -56,7 +55,7 @@ const DetailsAnimeContent = () => {
 
   const animeTitle = titles?.en || canonicalTitle || "Untitled";
 
-  const isMovie = showType === ANIME_FILTER_TYPES["movie"];
+  const isMovie = showType === "movie";
 
   let durationText = "-";
   if (episodeLength) {
@@ -127,6 +126,7 @@ const DetailsAnimeContent = () => {
             <Image
               src={posterImage?.original || "/placeholder.jpg"}
               fill
+              sizes="300px"
               alt={`${animeTitle} poster`}
               className={classNames("object-cover", {
                 "opacity-0": !load,
