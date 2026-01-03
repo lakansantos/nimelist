@@ -3,10 +3,8 @@
 import Image from "next/image";
 import React from "react";
 import {MdBookmark, MdBookmarkBorder} from "react-icons/md";
-import useRecommendationSave, {
-  RecommendedSavedAnime,
-} from "./useRecommendationSave";
 import {Anime} from "@app-types/anime";
+import useSave from "@hooks/useSave";
 
 const RecommendedAnimeCard = ({
   item,
@@ -17,14 +15,15 @@ const RecommendedAnimeCard = ({
 }) => {
   const {attributes} = item || {};
 
-  const {canonicalTitle, posterImage} = attributes;
-  const saveItem: RecommendedSavedAnime = {
-    id: item.id,
+  const {canonicalTitle, coverImage, startDate, posterImage} = attributes;
+  const savedItemDetails = {
     title: canonicalTitle,
-    image: posterImage.original,
+    id: item.id,
+    year: startDate,
+    image: coverImage,
   };
 
-  const {isSaved, onSave} = useRecommendationSave(saveItem);
+  const {isSaved, onSave} = useSave(savedItemDetails);
 
   return (
     <div className="relative group w-full">

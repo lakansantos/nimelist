@@ -32,8 +32,6 @@ const RecommendedAnime = ({data, title}: AnimeCardsContainerProps) => {
     .filter((item) => Boolean(item.attributes.posterImage))
     .slice(0, visibleCount);
 
-  console.log(visibleData.length, "visibledatalength");
-
   return (
     <>
       <div

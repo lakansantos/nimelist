@@ -13,14 +13,14 @@ const AnimeTrendingCard = ({
   item: Anime;
   setLoad: (load: boolean) => void;
 }) => {
-  const {titles, ageRating, startDate, canonicalTitle, posterImage} =
+  const {titles, ageRating, startDate, canonicalTitle, coverImage} =
     item.attributes;
 
   const savedItemDetails = {
     title: canonicalTitle,
     id: item.id,
     year: startDate,
-    image: posterImage,
+    image: coverImage,
   };
   const {isSaved, onSave} = useSave(savedItemDetails);
   return (
@@ -34,7 +34,7 @@ const AnimeTrendingCard = ({
           priority
           fill
           sizes="(max-width: 640px) 100vw, 300px"
-          src={posterImage.original}
+          src={coverImage.original}
           alt={`${titles.en} image`}
           className="object-cover transition-transform duration-300"
           onLoad={() => setLoad(true)}
