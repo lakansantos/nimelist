@@ -16,7 +16,7 @@ const useFade = (filteredData: Anime[]) => {
         );
         setFade(true); // fade-in the next image
       }, 500); // small delay for fade-out effect
-    }, 10000);
+    }, 7000);
 
     return () => clearInterval(intervalId);
   }, [filteredData.length]);
