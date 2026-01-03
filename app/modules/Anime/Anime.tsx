@@ -3,14 +3,13 @@ import React, {lazy} from "react";
 
 import {Anime as AnimeType} from "@app-types/anime";
 import {AnimeResponse} from "@app-types/anime";
-import {AnimeData} from "@app-types/topAnimeData";
 import Sidebar from "./Sidebar/Sidebar";
 import useSidebar from "./Sidebar/useSidebar";
 
 type AnimeProps = {
   animeBannerData: AnimeType[];
   trendingData: AnimeResponse;
-  recommendedData: AnimeData[];
+  recommendedData: AnimeResponse;
 };
 
 // Lazy load tab components

@@ -5,12 +5,11 @@ import TrendingAnime from "@modules/Anime/AnimeHome/Trending/TrendingAnime";
 import RecommendedAnime from "@modules/Anime/AnimeHome/Recommended/RecommendedAnime";
 import {Anime as AnimeType} from "@app-types/anime";
 import {AnimeResponse} from "@app-types/anime";
-import {AnimeData} from "@app-types/topAnimeData";
 
 type AnimeProps = {
   animeBannerData: AnimeType[];
   trendingData: AnimeResponse;
-  recommendedData: AnimeData[];
+  recommendedData: AnimeType[];
 };
 const AnimeHome = ({
   trendingData,

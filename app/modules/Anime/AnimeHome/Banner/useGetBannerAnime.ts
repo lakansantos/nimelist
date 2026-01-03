@@ -1,8 +1,8 @@
 import {BASE_API_KITSU_URL} from "@constants/configs";
-import {Anime} from "@app-types/anime";
+import {AnimeResponse} from "@app-types/anime";
 
 type AnimeDataResponse = {
-  data: Anime[];
+  data: AnimeResponse;
 };
 
 const useGetBannerAnime = async (): Promise<AnimeDataResponse> => {

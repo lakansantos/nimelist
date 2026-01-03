@@ -14,6 +14,7 @@ import DetailsGenre from "./DetailsGenre";
 import {dateFormat} from "@utils/dates";
 import {MdBookmarkBorder} from "react-icons/md";
 import {useState} from "react";
+import {ANIME_FILTER_TYPES} from "@app-types/animeFilters";
 
 const MAX_CHARS = 300;
 
@@ -22,7 +23,7 @@ const DetailsAnimeContent = () => {
 
   const {
     averageRating,
-    totalLength: duration,
+    episodeLength: duration,
     episodeCount,
     ratingRank,
     ageRating,
@@ -33,11 +34,20 @@ const DetailsAnimeContent = () => {
     canonicalTitle,
     titles,
     synopsis,
+    showType,
     youtubeVideoId,
   } = anime?.attributes || {};
 
   const [expanded, setExpanded] = useState(false);
 
+  let durationText = "";
+
+  const isMovie = showType === ANIME_FILTER_TYPES["movie"];
+  if (episodeCount === 1 && isMovie) {
+    durationText = `${duration} minutes`;
+  } else {
+    durationText = `${duration} min/ep`;
+  }
   const detailsContent = [
     {
       label: "Rating",
@@ -63,10 +73,7 @@ const DetailsAnimeContent = () => {
     },
     {
       label: "Duration",
-      value:
-        duration && episodeCount
-          ? `${duration / episodeCount} min/ep`
-          : `${duration} minutes`,
+      value: durationText,
       icon: <FaClock className="text-orange-400" />,
     },
     {
