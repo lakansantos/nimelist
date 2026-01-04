@@ -15,9 +15,10 @@ const RecommendedAnimeCard = ({
 }) => {
   const {attributes} = item || {};
 
-  const {canonicalTitle, coverImage, startDate, posterImage} = attributes;
+  const {canonicalTitle, titles, coverImage, startDate, posterImage} =
+    attributes;
   const savedItemDetails = {
-    title: canonicalTitle,
+    title: titles.en ?? canonicalTitle ?? titles.en_jp ?? "",
     id: item.id,
     year: startDate,
     image: coverImage,
@@ -40,7 +41,7 @@ const RecommendedAnimeCard = ({
           />
         </div>
         <p className="mt-2 text-white text-sm overflow-hidden whitespace-nowrap text-ellipsis leading-snug">
-          {canonicalTitle}
+          {titles.en ?? canonicalTitle ?? titles.en_jp}
         </p>
       </a>
 

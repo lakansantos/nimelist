@@ -17,7 +17,7 @@ const TrendingAnimeCard = ({
 
   const saveItem: SavedAnime = {
     id: item.id,
-    title: titles.en_us ?? canonicalTitle ?? titles.en_jp ?? "",
+    title: titles.en ?? canonicalTitle ?? titles.en_jp ?? "",
     year: startDate,
     image: coverImage,
   };
@@ -70,7 +70,7 @@ const TrendingAnimeCard = ({
           {extractYear(startDate)} · {ageRating}
         </p>
         <p className="md:text-2xl text-white font-semibold">
-          {titles.en_us ?? canonicalTitle ?? titles.en_jp}
+          {titles.en ?? canonicalTitle ?? titles.en_jp}
         </p>
       </div>
     </a>

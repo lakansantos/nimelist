@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import {MdDelete} from "react-icons/md";
 import {SavedAnime} from "@app-types/savedAnime";
+import {dateFormat} from "@utils/dates";
 
 type Props = {
   item: SavedAnime;
@@ -22,7 +23,7 @@ const AnimeSavedCard = ({item, onRemove}: Props) => {
           alt={item.title}
           className="object-cover rounded-lg transition-transform duration-300 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:opacity-0" />
+        <div className="absolute inset-0 bg-black/50 transition-opacity duration-300 group-hover:opacity-0" />
       </div>
 
       {/* Remove button */}
@@ -39,9 +40,11 @@ const AnimeSavedCard = ({item, onRemove}: Props) => {
       </button>
 
       {/* Text */}
-      <div className="absolute bottom-0 left-0 z-20 p-5 flex flex-col justify-end items-start pointer-events-none">
-        <p className="text-sm text-white">{item.year}</p>
-        <p className="md:text-2xl text-white font-semibold">{item.title}</p>
+      <div className="absolute bottom-0 left-0 z-20 w-full p-5 flex flex-col justify-end items-start pointer-events-none">
+        <p className="text-sm text-white">
+          {dateFormat(item.year as string, "MMMM DD, YYYY")}
+        </p>
+        <p className="text-white w-full whitespace-wrap">{item.title}</p>
       </div>
     </a>
   );
