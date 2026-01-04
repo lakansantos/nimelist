@@ -80,7 +80,12 @@ const useSearch = () => {
 
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        const nextOffset = offset + PAGE_LIMIT;
+        let nextOffset = offset + PAGE_LIMIT;
+
+        if (nextOffset === 10) {
+          nextOffset = 20;
+        }
+
         setOffset(nextOffset);
         fetchAnime(query, nextOffset);
       }
@@ -90,7 +95,6 @@ const useSearch = () => {
 
     return () => observer.disconnect();
   }, [loading, hasMore, offset, query, isOpen]);
-
   // -----------------------------
   // Close on outside click
   // -----------------------------
