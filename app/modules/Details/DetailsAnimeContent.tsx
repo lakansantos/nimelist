@@ -86,8 +86,8 @@ const DetailsAnimeContent = () => {
     },
     {
       label: "Aired",
-      value: `${dateFormat(startDate || "")} - ${
-        status === "current" ? "Ongoing" : dateFormat(endDate || "")
+      value: `${startDate ? dateFormat(startDate) : "N/A"} - ${
+        status === "current" ? "Ongoing" : endDate ? dateFormat(endDate) : "N/A"
       }`,
       icon: <FaCalendarAlt className="text-purple-400" />,
     },

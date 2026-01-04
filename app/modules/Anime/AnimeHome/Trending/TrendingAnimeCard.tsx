@@ -27,7 +27,7 @@ const TrendingAnimeCard = ({
   return (
     <a
       href={item.id}
-      className="relative h-[200px] min-w-[400px] w-[400px] rounded-lg overflow-hidden cursor-pointer"
+      className="relative h-[200px] min-w-[90%] sm:min-w-[400px] rounded-lg overflow-hidden cursor-pointer"
     >
       {/* Image wrapper */}
       <div className="relative h-full w-full transition-transform duration-300 hover:scale-110">

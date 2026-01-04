@@ -42,7 +42,7 @@ const RecommendedAnime = ({data, title}: AnimeCardsContainerProps) => {
       >
         <div className="mb-5 flex items-center gap-1">
           <IoMdStar className="text-white text-3xl" />
-          <p className="text-3xl text-white font-thin"> {title}</p>
+          <p className="text-2xl sm:text-3xl text-white font-thin"> {title}</p>
         </div>
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">

@@ -28,7 +28,7 @@ const TrendingAnime = ({data, title}: AnimeCardsContainerProps) => {
     <div className="relative min-h-[200px] flex flex-col max-w-full">
       <div className="mb-5 flex items-center gap-1">
         <MdLocalFireDepartment className="text-orange-500 text-3xl" />
-        <p className="text-3xl text-white font-thin"> {title}</p>
+        <p className="text-2xl sm:text-3xl text-white font-thin"> {title}</p>
       </div>
 
       <div className="relative group">
