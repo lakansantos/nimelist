@@ -18,7 +18,7 @@ const DetailsBanner = () => {
       {/* Banner Skeleton */}
       <div
         className={classNames(
-          "absolute inset-0 bg-gray-800 rounded-md animate-pulse z-10",
+          "absolute inset-0 bg-gray-800 rounded-md animate-pulse z-9",
           {
             "opacity-100": !load,
             hidden: load,

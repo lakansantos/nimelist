@@ -121,12 +121,12 @@ const DetailsAnimeContent = () => {
     <div className="main-container min-h-[50vh] flex-col-reverse flex md:flex-row p-5">
       {/* LEFT CONTAINER */}
       <div className="relative w-full md:w-[300px]">
-        <div className="static md:absolute top-[-140px] p-5 h-[700px] w-full bg-default_light flex flex-col">
-          <div className="relative h-[200px] w-full mb-2">
+        <div className="static md:absolute top-[-140px] p-5 max-h-[700px] w-full bg-default_light flex flex-col">
+          <div className="relative min-h-[200px] h-[500px] w-full  mb-2">
             <Image
               src={posterImage?.original || "/placeholder.jpg"}
               fill
-              sizes="300px"
+              sizes="(max-width: 640px) 100vw, 300px"
               alt={`${animeTitle} poster`}
               className={classNames("object-cover", {
                 "opacity-0": !load,
@@ -137,7 +137,7 @@ const DetailsAnimeContent = () => {
             {/*Skeleton for image left container */}
             <div
               className={classNames(
-                "relative h-[200px] w-full bg-gray-700 rounded-md z-[100]",
+                "absolute top-0 h-[250px] md:h-[250px] w-full bg-gray-700 rounded-md z-[100]",
                 {
                   "opacity-0": load,
                   "opacity-100": !load,
@@ -190,7 +190,7 @@ const DetailsAnimeContent = () => {
         <h2 className="text-4xl text-orange-400">{animeTitle}</h2>
 
         {/* Synopsis */}
-        <div>
+        <div className="w-full lg:w-3/4">
           <h3 className="text-gray-400 text-2xl">Synopsis</h3>
           <div className="border-b my-2 border-gray-500/50" />
 

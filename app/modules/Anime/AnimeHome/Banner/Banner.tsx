@@ -52,10 +52,10 @@ const Banner = ({data}: {data: Anime[]}) => {
           src={coverImage.original}
           alt="Banner"
           fill
-          sizes="400px"
+          sizes="100vw"
           onLoad={() => setLoad(true)}
           className={cx(
-            "object-cover transition-opacity duration-1000 ease-out",
+            "object-cover object-center transition-opacity duration-1000 ease-out",
             {
               "opacity-100": fade,
               "opacity-0": !fade,
@@ -73,14 +73,14 @@ const Banner = ({data}: {data: Anime[]}) => {
         {/* Text content */}
         <div
           className={cx(
-            "relative z-30 h-full w-full flex flex-col justify-end pb-[40px] md:lg:pb-[70px] items-start p-5 transition-opacity duration-1000 ease-out",
+            "relative z-30 h-full w-full flex flex-col justify-center pb-[40px]   md:justify-end md:lg:pb-[70px] items-start p-5 transition-opacity duration-1000 ease-out",
             {
               "opacity-100": fade,
               "opacity-0": !fade,
             }
           )}
         >
-          <div className="text-5xl md:text-7xl text-white max-w-[100%] lg:max-w-[50%] h-fit">
+          <div className="text-4xl md:text-7xl text-white max-w-[100%] lg:max-w-[50%] h-fit">
             <p className="overflow-hidden whitespace-nowrap text-ellipsis leading-snug">
               {" "}
               {titles.en ?? canonicalTitle ?? titles.en_us ?? titles.ja_jp}
@@ -98,7 +98,7 @@ const Banner = ({data}: {data: Anime[]}) => {
             </span>
           </div>
 
-          <p className="text-4xl md:text-2xl font-thin text-white max-w-full md:max-w-[50%] line-clamp-4">
+          <p className="text-2xl md:text-2xl font-thin text-white max-w-full md:max-w-[50%] line-clamp-4">
             {description}
           </p>
 
