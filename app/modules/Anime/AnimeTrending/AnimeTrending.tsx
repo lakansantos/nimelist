@@ -53,7 +53,7 @@ const AnimeTrending = ({data}: {data: AnimeResponse}) => {
               >
                 <div
                   className={cx(
-                    "grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-4",
+                    "grid grid-cols-[repeat(auto-fit,minmax(auto,1fr))] gap-4 lg:grid-cols-[repeat(auto-fit,minmax(400px,1fr))]",
                     {
                       "lg:grid-cols-[repeat(auto-fit,minmax(400px,400px))]":
                         filteredData.length <= 3,
