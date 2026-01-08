@@ -2,6 +2,9 @@ export const ANIME_FILTER_TYPES = {
   TV: "Series",
   movie: "Movie",
   ONA: "ONA",
+  special: "Special",
+  music: "Music",
+  OVA: "OVA",
   all: "all",
 };
 
