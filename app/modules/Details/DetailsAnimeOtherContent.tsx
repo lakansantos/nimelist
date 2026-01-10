@@ -12,17 +12,11 @@ const DetailsAnimeOtherContent = () => {
     titles,
     status,
     nextRelease,
-    episodeCount,
     showType,
     totalLength: duration,
   } = anime.attributes;
 
-  const durationText =
-    duration && episodeCount
-      ? `${duration / episodeCount} min/ep`
-      : duration
-      ? `${duration} minutes`
-      : "N/A";
+  const durationText = duration ? `${Math.abs(duration)} minutes` : "N/A";
 
   const animeInfo = [
     {label: "Japanese Title", value: titles.ja_jp},

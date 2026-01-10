@@ -109,7 +109,7 @@ const DetailsAnimeContent = () => {
   // Save logic
   // -----------------------------
   const savedItemDetails = {
-    title: canonicalTitle,
+    title: animeTitle,
     id: anime?.id,
     year: startDate,
     image: coverImage,
