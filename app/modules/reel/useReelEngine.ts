@@ -61,8 +61,14 @@ export const useReelEngine = ({
   const scrollable = useCallback(() => {
     const root = rootRef.current;
     if (!root) return 1;
+    // Phones: the address bar changes innerHeight mid-scroll, which made
+    // progress jump. The root is (units + 1) × 100svh tall, so derive one unit
+    // from it instead. Desktop keeps the original measurement.
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      return Math.max(1, (root.offsetHeight / (units + 1)) * units);
+    }
     return Math.max(1, root.offsetHeight - window.innerHeight);
-  }, [rootRef]);
+  }, [rootRef, units]);
 
   const progress = useCallback(() => {
     const root = rootRef.current;

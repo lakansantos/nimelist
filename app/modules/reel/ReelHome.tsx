@@ -105,21 +105,31 @@ const ReelHome = ({scenes, top}: Props) => {
       if (!nodesRef.current) nodesRef.current = collect(root, sceneCount);
       const n = nodesRef.current;
       const rm = reducedRef.current;
-      const step = (x: number, count: number) => (rm ? 1 : stepped(x, count));
+      const desktop = desktopRef.current;
+      // Desktop: frame-by-frame steps. Phones: continuous, so a finger scroll
+      // feels smooth.
+      const frames = (x: number, count: number) =>
+        desktop ? stepped(x, count) : clamp01(x);
+      const step = (x: number, count: number) => (rm ? 1 : frames(x, count));
 
       // Opening: letters and the poster fan leave frame by frame.
       const t = clamp01(u);
       n.letters.forEach((el, i) => {
-        const s = rm ? 0 : stepped(t * 1.5 - i * 0.06, 6);
+        const s = rm ? 0 : frames(t * 1.5 - (i % 8) * 0.06, 6);
         el.style.transform = `translateY(${(-s * 130).toFixed(0)}%) rotate(${(
           -s * 10
         ).toFixed(0)}deg)`;
       });
       n.fan.forEach((el, i) => {
-        const s = rm ? 0 : stepped(t * 1.6 - i * 0.1, 8);
-        el.style.transform = `translate(${(i - 2) * 56}px, ${(-s * 120).toFixed(
-          0
-        )}svh) rotate(${-14 + i * 7}deg)`;
+        const s = rm ? 0 : frames(t * 1.6 - i * 0.1, 8);
+        // Phones: the fan drops out of the bottom so it never crosses the text.
+        el.style.transform = desktop
+          ? `translate(${(i - 2) * 56}px, ${(-s * 120).toFixed(0)}svh) rotate(${
+              -14 + i * 7
+            }deg)`
+          : `translate(${((i - 2) * el.offsetWidth * 0.38).toFixed(0)}px, ${(
+              s * 120
+            ).toFixed(0)}svh) rotate(${-14 + i * 7}deg)`;
       });
       if (n.arrow)
         n.arrow.style.transform =
@@ -131,9 +141,8 @@ const ReelHome = ({scenes, top}: Props) => {
       if (u >= 1 && u < 1 + sceneCount) {
         const index = Math.min(sceneCount - 1, Math.floor(u - 1));
         const local = u - 1 - index;
-        const q = rm ? 0 : stepped(local, 12);
+        const q = rm ? 0 : frames(local, 12);
         const s = n.scenes[index];
-        const desktop = desktopRef.current;
         s.bg.forEach((el) => {
           el.style.transform = desktop
             ? `scale(${(1.16 - q * 0.16).toFixed(3)}) translateX(${(
@@ -171,7 +180,7 @@ const ReelHome = ({scenes, top}: Props) => {
             Math.min(12, Math.floor(q * 12) + 1)
           )}/12`;
         const wipe = (start: number, length: number, count: number) =>
-          rm ? 1.3 : stepped((local - start) / length, count) * 1.3;
+          rm ? 1.3 : frames((local - start) / length, count) * 1.3;
         if (s.wipeB)
           s.wipeB.style.transform = desktop
             ? `translateX(${wipe(0, 0.06, 3) * 100}%) skewX(-12deg)`
@@ -187,12 +196,12 @@ const ReelHome = ({scenes, top}: Props) => {
       if (n.recRow)
         n.recRow.style.transform = `translateX(calc((100vw - 100%) * ${(rm
           ? r
-          : stepped(r, 24)
+          : frames(r, 24)
         ).toFixed(3)}))`;
       n.recItems.forEach((el, i) => {
         el.style.transform = rm
           ? "none"
-          : `rotate(${((i % 2 ? 1 : -1) * (3 - stepped(r, 6) * 3)).toFixed(
+          : `rotate(${((i % 2 ? 1 : -1) * (3 - frames(r, 6) * 3)).toFixed(
               1
             )}deg)`;
       });
@@ -334,7 +343,7 @@ const ReelHome = ({scenes, top}: Props) => {
           </span>
           <p
             aria-hidden
-            className="flex flex-wrap font-display text-[min(128px,14svh,34vw)] font-extrabold leading-[0.82] tracking-[-0.06em] md:text-[clamp(72px,16vw,250px)] md:leading-[0.85] md:tracking-[-0.05em]"
+            className="hidden flex-wrap font-display text-[min(128px,14svh,34vw)] font-extrabold leading-[0.82] tracking-[-0.06em] md:text-[clamp(72px,16vw,250px)] md:leading-[0.85] md:flex md:tracking-[-0.05em]"
           >
             {"nimelist".split("").map((ch, i) => (
               <Fragment key={i}>
@@ -346,6 +355,31 @@ const ReelHome = ({scenes, top}: Props) => {
                   {ch}
                 </span>
               </Fragment>
+            ))}
+          </p>
+          {/* Phones: each line clips its own letters so they leave inside it. */}
+          <p
+            aria-hidden
+            className="flex flex-col font-display text-[min(128px,14svh,34vw)] font-extrabold leading-[0.82] tracking-[-0.06em] md:hidden"
+          >
+            {["nime", "list"].map((word, w) => (
+              <span
+                key={word}
+                className="-my-[0.06em] flex overflow-hidden py-[0.06em]"
+              >
+                {word.split("").map((ch, i) => (
+                  <span
+                    key={i}
+                    data-letter
+                    className={cx(
+                      "inline-block will-change-transform",
+                      w === 0 && i === 0 && "text-amber"
+                    )}
+                  >
+                    {ch}
+                  </span>
+                ))}
+              </span>
             ))}
           </p>
           <div className="flex flex-wrap items-center gap-2.5 text-[15px] text-[#D5D9E2] md:gap-3.5 md:text-base">
@@ -381,22 +415,24 @@ const ReelHome = ({scenes, top}: Props) => {
           </div>
           <div
             aria-hidden
-            className="pointer-events-none absolute bottom-[calc(140px+14svh)] left-1/2 h-0 w-0 max-md:[@media(max-height:700px)]:hidden md:bottom-[18svh] md:left-auto md:right-[14vw]"
+            className="pointer-events-none max-md:relative max-md:-mb-[40px] max-md:min-h-0 max-md:flex-1 max-md:[container-type:size] md:absolute md:bottom-[18svh] md:right-[14vw] md:h-0 md:w-0"
           >
-            {scenes.map((s, i) =>
-              s.poster ? (
-                <Image
-                  key={s.id}
-                  data-fan
-                  src={s.poster.small}
-                  alt=""
-                  width={284}
-                  height={402}
-                  priority={i < 2}
-                  className="absolute -left-[min(60px,7svh)] -top-[min(90px,10.5svh)] aspect-[2/3] w-[min(120px,14svh)] max-w-none border-4 border-fg object-cover md:-left-[100px] md:-top-[150px] md:w-[200px] md:border-[5px]"
-                />
-              ) : null
-            )}
+            <div className="max-md:absolute max-md:left-1/2 max-md:top-1/2 max-md:h-0 max-md:w-0 md:contents">
+              {scenes.map((s, i) =>
+                s.poster ? (
+                  <Image
+                    key={s.id}
+                    data-fan
+                    src={s.poster.small}
+                    alt=""
+                    width={284}
+                    height={402}
+                    priority={i < 2}
+                    className="absolute -left-[calc(min(120px,14svh,60cqh)/2)] -top-[calc(min(120px,14svh,60cqh)*0.75)] aspect-[2/3] w-[min(120px,14svh,60cqh)] max-w-none border-4 max-md:will-change-transform border-fg object-cover md:-left-[100px] md:-top-[150px] md:w-[200px] md:border-[5px]"
+                  />
+                ) : null
+              )}
+            </div>
           </div>
         </section>
 
