@@ -325,7 +325,7 @@ const ReelHome = ({scenes, top}: Props) => {
           aria-label="Opening"
           aria-hidden={!isIntro}
           className={cx(
-            "absolute inset-0 flex flex-col justify-center gap-5 px-5 pb-36 md:gap-7 md:px-[clamp(20px,5vw,72px)] md:pb-0",
+            "absolute inset-0 flex flex-col justify-start gap-4 px-5 pb-[150px] pt-[84px] md:justify-center md:gap-7 md:px-[clamp(20px,5vw,72px)] md:pb-0 md:pt-0",
             !isIntro && "invisible"
           )}
         >
@@ -334,7 +334,7 @@ const ReelHome = ({scenes, top}: Props) => {
           </span>
           <p
             aria-hidden
-            className="flex flex-wrap font-display text-[128px] font-extrabold leading-[0.82] tracking-[-0.06em] md:text-[clamp(72px,16vw,250px)] md:leading-[0.85] md:tracking-[-0.05em]"
+            className="flex flex-wrap font-display text-[min(128px,14svh,34vw)] font-extrabold leading-[0.82] tracking-[-0.06em] md:text-[clamp(72px,16vw,250px)] md:leading-[0.85] md:tracking-[-0.05em]"
           >
             {"nimelist".split("").map((ch, i) => (
               <Fragment key={i}>
@@ -381,7 +381,7 @@ const ReelHome = ({scenes, top}: Props) => {
           </div>
           <div
             aria-hidden
-            className="pointer-events-none absolute bottom-[170px] left-1/2 h-0 w-0 md:bottom-[18svh] md:left-auto md:right-[14vw]"
+            className="pointer-events-none absolute bottom-[calc(140px+14svh)] left-1/2 h-0 w-0 max-md:[@media(max-height:700px)]:hidden md:bottom-[18svh] md:left-auto md:right-[14vw]"
           >
             {scenes.map((s, i) =>
               s.poster ? (
@@ -393,7 +393,7 @@ const ReelHome = ({scenes, top}: Props) => {
                   width={284}
                   height={402}
                   priority={i < 2}
-                  className="absolute -left-[60px] -top-[90px] aspect-[2/3] w-[120px] max-w-none border-4 border-fg object-cover md:-left-[100px] md:-top-[150px] md:w-[200px] md:border-[5px]"
+                  className="absolute -left-[min(60px,7svh)] -top-[min(90px,10.5svh)] aspect-[2/3] w-[min(120px,14svh)] max-w-none border-4 border-fg object-cover md:-left-[100px] md:-top-[150px] md:w-[200px] md:border-[5px]"
                 />
               ) : null
             )}
@@ -448,7 +448,7 @@ const ReelHome = ({scenes, top}: Props) => {
                   data-part="ja"
                   lang="ja"
                   aria-hidden
-                  className="absolute right-3.5 top-24 font-jp text-[34px] font-black leading-none text-fg/85 [text-shadow:0_2px_12px_rgba(0,0,0,0.5)] [writing-mode:vertical-rl] md:right-[clamp(96px,9vw,140px)] md:top-[12svh] md:text-[clamp(40px,6vw,92px)] md:text-fg/[0.14] md:[text-shadow:none]"
+                  className="absolute right-3.5 top-24 max-h-[34svh] overflow-hidden whitespace-nowrap font-jp text-[min(34px,4.4svh)] font-black leading-none md:max-h-none md:overflow-visible text-fg/85 [text-shadow:0_2px_12px_rgba(0,0,0,0.5)] [writing-mode:vertical-rl] md:right-[clamp(96px,9vw,140px)] md:top-[12svh] md:text-[clamp(40px,6vw,92px)] md:text-fg/[0.14] md:[text-shadow:none]"
                 >
                   {s.titleJa}
                 </span>
@@ -456,11 +456,11 @@ const ReelHome = ({scenes, top}: Props) => {
               <div
                 data-part="rank"
                 aria-hidden
-                className="absolute left-[18px] top-[84px] font-display text-[150px] font-extrabold leading-[0.8] tracking-[-0.06em] text-transparent [-webkit-text-stroke:2px_#F5B544] md:left-[clamp(20px,5vw,72px)] md:top-[11svh] md:text-[clamp(120px,20vw,320px)] md:tracking-[-0.05em]"
+                className="absolute left-[18px] top-[84px] font-display text-[min(150px,15svh)] font-extrabold leading-[0.8] tracking-[-0.06em] text-transparent [-webkit-text-stroke:2px_#F5B544] md:left-[clamp(20px,5vw,72px)] md:top-[11svh] md:text-[clamp(120px,20vw,320px)] md:tracking-[-0.05em]"
               >
                 {pad(i + 1)}
               </div>
-              <div className="absolute inset-x-5 bottom-[150px] flex flex-col gap-3 md:bottom-[15svh] md:left-[clamp(20px,5vw,72px)] md:right-auto md:max-w-[min(640px,86vw)] md:gap-[18px]">
+              <div className="absolute bottom-[140px] left-5 right-[60px] flex flex-col gap-3 md:bottom-[15svh] md:left-[clamp(20px,5vw,72px)] md:right-auto md:max-w-[min(640px,86vw)] md:gap-[18px]">
                 <span
                   data-part="meta"
                   className="font-mono text-[11px] uppercase tracking-[0.06em] text-[#D5D9E2] md:text-[13px] md:tracking-[0.04em]"
@@ -543,14 +543,14 @@ const ReelHome = ({scenes, top}: Props) => {
           aria-labelledby="reel-top"
           aria-hidden={!isRec}
           className={cx(
-            "absolute inset-0 flex flex-col justify-center gap-6 pb-20 md:gap-9 md:pb-0",
+            "absolute inset-0 flex flex-col justify-start gap-4 pb-[140px] pt-[84px] md:justify-center md:gap-9 md:pb-0 md:pt-0",
             !isRec && "invisible"
           )}
         >
           <div className="flex flex-wrap items-baseline justify-between gap-4 px-5 md:px-[clamp(20px,5vw,72px)]">
             <h2
               id="reel-top"
-              className="font-display text-[72px] font-extrabold leading-[0.85] tracking-[-0.05em] md:text-[clamp(56px,9vw,140px)]"
+              className="font-display text-[clamp(40px,6svh,72px)] font-extrabold leading-[0.85] tracking-[-0.05em] md:text-[clamp(56px,9vw,140px)]"
             >
               Top rated
             </h2>
@@ -563,7 +563,7 @@ const ReelHome = ({scenes, top}: Props) => {
               </Link>
               <a
                 href={switchModeHref("simple", "/")}
-                className="inline-flex min-h-[44px] items-center font-semibold text-muted-strong hover:text-amber"
+                className="hidden min-h-[44px] items-center font-semibold text-muted-strong hover:text-amber md:inline-flex"
               >
                 or switch to Simple mode
               </a>
@@ -577,7 +577,7 @@ const ReelHome = ({scenes, top}: Props) => {
               <li
                 key={item.id}
                 data-rec
-                className="w-[200px] shrink-0 md:w-[clamp(170px,17vw,250px)]"
+                className="w-[min(200px,22svh)] shrink-0 md:w-[clamp(170px,17vw,250px)]"
               >
                 <Link
                   href={`/${item.id}`}
@@ -837,6 +837,8 @@ const ReelMenu = ({
   const here = "● YOU ARE HERE";
   const items: {
     label: string;
+    /** Shorter label for phones. */
+    short?: string;
     note: string;
     href?: string;
     u?: number;
@@ -850,6 +852,7 @@ const ReelMenu = ({
     },
     {
       label: "Trending scenes",
+      short: "Trending",
       note: current === 1 ? here : `${pad(sceneCount)} SCENES`,
       u: 1.45,
       current: current === 1,
@@ -872,7 +875,7 @@ const ReelMenu = ({
       aria-modal="true"
       aria-label="Menu"
       onKeyDown={onKeyDown}
-      className="absolute inset-0 z-50 flex flex-col justify-between gap-4 bg-amber px-5 pb-6 pt-[18px] text-amber-ink md:px-[clamp(20px,5vw,72px)] md:pb-7 md:pt-5"
+      className="absolute inset-0 z-50 flex flex-col justify-between gap-3 bg-amber px-5 pb-6 pt-[18px] text-amber-ink md:px-[clamp(20px,5vw,72px)] md:pb-7 md:pt-5"
     >
       <div className="flex items-center justify-between">
         <span className="font-display text-[22px] font-extrabold tracking-[-0.03em]">
@@ -887,7 +890,7 @@ const ReelMenu = ({
           Close · Esc
         </button>
       </div>
-      <ul className="flex flex-col">
+      <ul className="no-scrollbar flex min-h-0 flex-col overflow-y-auto">
         {items.map((m, i) => (
           <li
             key={m.label}
@@ -899,7 +902,7 @@ const ReelMenu = ({
             {m.href ? (
               <Link
                 href={m.href}
-                className="flex-1 font-display text-[44px] font-extrabold leading-[1.1] tracking-[-0.04em] hover:text-white md:text-[clamp(40px,6.5vw,92px)] md:leading-none"
+                className="flex-1 font-display text-[clamp(26px,4.8svh,44px)] font-extrabold leading-[1.15] tracking-[-0.04em] hover:text-white md:text-[clamp(40px,6.5vw,92px)] md:leading-none"
               >
                 {m.label}
               </Link>
@@ -911,13 +914,15 @@ const ReelMenu = ({
                   e.preventDefault();
                   jump(m.u ?? 0);
                 }}
-                className="flex-1 font-display text-[44px] font-extrabold leading-[1.1] tracking-[-0.04em] hover:text-white md:text-[clamp(40px,6.5vw,92px)] md:leading-none"
+                className="flex-1 font-display text-[clamp(26px,4.8svh,44px)] font-extrabold leading-[1.15] tracking-[-0.04em] hover:text-white md:text-[clamp(40px,6.5vw,92px)] md:leading-none"
               >
-                {m.label}
+                <span className="md:hidden">{m.short ?? m.label}</span>
+                <span className="hidden md:inline">{m.label}</span>
               </a>
             )}
             <span className="font-mono text-[10px] md:text-[13px]">
-              {m.note}
+              <span className="md:hidden">{m.current ? "●" : ""}</span>
+              <span className="hidden md:inline">{m.note}</span>
             </span>
           </li>
         ))}
@@ -927,11 +932,11 @@ const ReelMenu = ({
           </span>
           <a
             href={switchModeHref("simple", "/")}
-            className="flex-1 font-display text-[44px] font-extrabold leading-[1.1] tracking-[-0.04em] hover:text-white md:text-[clamp(40px,6.5vw,92px)] md:leading-none"
+            className="flex-1 font-display text-[clamp(26px,4.8svh,44px)] font-extrabold leading-[1.15] tracking-[-0.04em] hover:text-white md:text-[clamp(40px,6.5vw,92px)] md:leading-none"
           >
             Simple mode
           </a>
-          <span className="font-mono text-[10px] md:text-[13px]">
+          <span className="hidden font-mono text-[13px] md:inline">
             CALM VIEW
           </span>
         </li>

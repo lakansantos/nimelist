@@ -106,7 +106,7 @@ const ReelSaved = () => {
                       className="block aspect-[2/3] w-full rounded bg-[#1B2130]"
                     />
                   )}
-                  <span className="font-semibold leading-snug group-hover:text-amber">
+                  <span className="line-clamp-2 min-h-[2.75em] font-semibold leading-snug group-hover:text-amber">
                     {entry.title}
                   </span>
                 </Link>
@@ -120,7 +120,7 @@ const ReelSaved = () => {
                     setLast(entry);
                   }}
                   aria-label={`Remove ${entry.title} from saved`}
-                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-[#2A3040] font-medium hover:border-fg"
+                  className="mt-auto inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-[#2A3040] font-medium hover:border-fg"
                 >
                   <CloseIcon />
                   Remove

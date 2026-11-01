@@ -104,11 +104,16 @@ export default async function ReelDetails({params}: Props) {
               <SaveButton
                 item={anime}
                 variant="reel-pill"
+                className="flex-1 whitespace-nowrap !min-h-[52px] aria-pressed:!border-amber aria-pressed:!bg-amber aria-pressed:!text-amber-ink md:hidden"
+              />
+              <SaveButton
+                item={anime}
+                variant="reel-pill"
                 labels={{
                   save: "Save to your list",
                   saved: "Saved to your list",
                 }}
-                className="flex-1 !min-h-[52px] aria-pressed:!border-amber aria-pressed:!bg-amber aria-pressed:!text-amber-ink"
+                className="hidden whitespace-nowrap !min-h-[52px] aria-pressed:!border-amber aria-pressed:!bg-amber aria-pressed:!text-amber-ink md:inline-flex"
               />
               {anime.trailerId && (
                 <a
