@@ -1,4 +1,4 @@
-import {BASE_API_KITSU_URL} from "@constants/configs";
+import {BASE_API_KITSU_URL, REVALIDATE_SECONDS} from "@constants/configs";
 import {AnimeResponse} from "@app-types/anime";
 
 type AnimeDataResponse = {
@@ -7,7 +7,9 @@ type AnimeDataResponse = {
 
 const useGetBannerAnime = async (): Promise<AnimeDataResponse> => {
   const joinedURL = `${BASE_API_KITSU_URL}/anime?page[limit]=20`;
-  const response = await fetch(joinedURL);
+  const response = await fetch(joinedURL, {
+    next: {revalidate: REVALIDATE_SECONDS.lists},
+  });
 
   if (!response.ok) {
     return {data: []};
