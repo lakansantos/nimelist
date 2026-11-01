@@ -28,35 +28,35 @@ export interface AnimeAttributes {
   canonicalTitle: string;
   abbreviatedTitles: string[];
 
-  averageRating: string;
+  averageRating: string | null;
   ratingFrequencies: Record<string, string>;
 
   userCount: number;
   favoritesCount: number;
 
-  startDate: string;
+  startDate: string | null;
   endDate: string | null;
   nextRelease: string | null;
 
   popularityRank: number;
   ratingRank: number;
 
-  ageRating: string;
-  ageRatingGuide: string;
+  ageRating: string | null;
+  ageRatingGuide: string | null;
 
   subtype: string;
-  status: "current" | "finished";
+  status: "current" | "finished" | "tba" | "unreleased" | "upcoming";
   tba: string | null;
 
-  posterImage: ImageSet;
-  coverImage: ImageSet;
+  posterImage: ImageSet | null;
+  coverImage: ImageSet | null;
 
-  episodeCount: number;
-  episodeLength: number;
-  totalLength: number;
+  episodeCount: number | null;
+  episodeLength: number | null;
+  totalLength: number | null;
 
-  youtubeVideoId: string;
-  showType: "TV" | "movie";
+  youtubeVideoId: string | null;
+  showType: "TV" | "movie" | "ONA" | "OVA" | "special" | "music";
   nsfw: boolean;
 }
 

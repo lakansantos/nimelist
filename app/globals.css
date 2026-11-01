@@ -2,20 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/*
+ * No overflow on html/body: an overflow value on any ancestor of the Reel's
+ * sticky stage stops position: sticky from working.
+ */
+html {
+  scroll-behavior: smooth;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
-.cards-container::-webkit-scrollbar {
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
-html {
-  scroll-behavior: smooth !important;
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
+
+/* In the base layer so utilities (e.g. outline-none on inputs inside a styled field) win. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid #f5b544;
+    outline-offset: 2px;
+  }
 }
