@@ -24,7 +24,7 @@ const config: Config = {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
-        jp: ["var(--font-jp)", "system-ui", "sans-serif"],
+        jp: ['"Noto Sans JP"', '"Hiragino Sans"', '"Yu Gothic"', "sans-serif"],
       },
       height: {
         "screen-s": "100svh",
