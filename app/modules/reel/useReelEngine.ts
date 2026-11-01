@@ -58,11 +58,16 @@ export const useReelEngine = ({
   const onFrameRef = useRef(onFrame);
   onFrameRef.current = onFrame;
 
+  /*
+   * Scroll length of the reel. The root is (units + 1) × 100svh tall, so one
+   * unit is root height / (units + 1). Using that instead of innerHeight keeps
+   * progress stable when a phone's address bar shows or hides mid-scroll.
+   */
   const scrollable = useCallback(() => {
     const root = rootRef.current;
     if (!root) return 1;
-    return Math.max(1, root.offsetHeight - window.innerHeight);
-  }, [rootRef]);
+    return Math.max(1, (root.offsetHeight / (units + 1)) * units);
+  }, [rootRef, units]);
 
   const progress = useCallback(() => {
     const root = rootRef.current;

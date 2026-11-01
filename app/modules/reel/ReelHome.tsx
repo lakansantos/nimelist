@@ -4,7 +4,6 @@ import cx from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Fragment,
   KeyboardEvent as ReactKeyboardEvent,
   useCallback,
   useEffect,
@@ -116,10 +115,13 @@ const ReelHome = ({scenes, top}: Props) => {
         ).toFixed(0)}deg)`;
       });
       n.fan.forEach((el, i) => {
-        const s = rm ? 0 : stepped(t * 1.6 - i * 0.1, 8);
-        el.style.transform = `translate(${(i - 2) * 56}px, ${(-s * 120).toFixed(
-          0
-        )}svh) rotate(${-14 + i * 7}deg)`;
+        // Finer steps for big moving pictures so they don't stutter. The fan
+        // drops out of the bottom so it never crosses the text or header.
+        const s = rm ? 0 : stepped(t * 1.6 - i * 0.1, 16);
+        const spread = desktopRef.current ? 56 : 46;
+        el.style.transform = `translate(${(i - 2) * spread}px, ${(
+          s * 120
+        ).toFixed(0)}svh) rotate(${-14 + i * 7}deg)`;
       });
       if (n.arrow)
         n.arrow.style.transform =
@@ -187,7 +189,7 @@ const ReelHome = ({scenes, top}: Props) => {
       if (n.recRow)
         n.recRow.style.transform = `translateX(calc((100vw - 100%) * ${(rm
           ? r
-          : stepped(r, 24)
+          : stepped(r, 48)
         ).toFixed(3)}))`;
       n.recItems.forEach((el, i) => {
         el.style.transform = rm
@@ -336,16 +338,26 @@ const ReelHome = ({scenes, top}: Props) => {
             aria-hidden
             className="flex flex-wrap font-display text-[min(128px,14svh,34vw)] font-extrabold leading-[0.82] tracking-[-0.06em] md:text-[clamp(72px,16vw,250px)] md:leading-[0.85] md:tracking-[-0.05em]"
           >
-            {"nimelist".split("").map((ch, i) => (
-              <Fragment key={i}>
-                {i === 4 && <span className="basis-full md:hidden" />}
-                <span
-                  data-letter
-                  className={cx("inline-block", i === 0 && "text-amber")}
-                >
-                  {ch}
-                </span>
-              </Fragment>
+            {/* Each line clips its own letters, so they leave upward without
+                crossing the tagline or header. */}
+            {["nime", "list"].map((word, w) => (
+              <span
+                key={word}
+                className="-my-[0.06em] flex overflow-hidden py-[0.06em] max-md:basis-full"
+              >
+                {word.split("").map((ch, i) => (
+                  <span
+                    key={i}
+                    data-letter
+                    className={cx(
+                      "inline-block will-change-transform",
+                      w === 0 && i === 0 && "text-amber"
+                    )}
+                  >
+                    {ch}
+                  </span>
+                ))}
+              </span>
             ))}
           </p>
           <div className="flex flex-wrap items-center gap-2.5 text-[15px] text-[#D5D9E2] md:gap-3.5 md:text-base">
@@ -379,24 +391,27 @@ const ReelHome = ({scenes, top}: Props) => {
               Prefer it calm? Simple mode
             </a>
           </div>
+          {/* Phones: the fan gets its own space below the text, so it never covers it. */}
           <div
             aria-hidden
-            className="pointer-events-none absolute bottom-[calc(140px+14svh)] left-1/2 h-0 w-0 max-md:[@media(max-height:700px)]:hidden md:bottom-[18svh] md:left-auto md:right-[14vw]"
+            className="pointer-events-none relative min-h-0 flex-1 max-md:[@media(max-height:640px)]:hidden md:absolute md:bottom-[max(18svh,190px)] md:right-[14vw] md:h-0 md:w-0 md:flex-none"
           >
-            {scenes.map((s, i) =>
-              s.poster ? (
-                <Image
-                  key={s.id}
-                  data-fan
-                  src={s.poster.small}
-                  alt=""
-                  width={284}
-                  height={402}
-                  priority={i < 2}
-                  className="absolute -left-[min(60px,7svh)] -top-[min(90px,10.5svh)] aspect-[2/3] w-[min(120px,14svh)] max-w-none border-4 border-fg object-cover md:-left-[100px] md:-top-[150px] md:w-[200px] md:border-[5px]"
-                />
-              ) : null
-            )}
+            <div className="absolute left-1/2 top-1/2 h-0 w-0 md:static">
+              {scenes.map((s, i) =>
+                s.poster ? (
+                  <Image
+                    key={s.id}
+                    data-fan
+                    src={s.poster.small}
+                    alt=""
+                    width={284}
+                    height={402}
+                    priority={i < 2}
+                    className="absolute -left-[min(60px,7svh)] -top-[min(90px,10.5svh)] aspect-[2/3] will-change-transform w-[min(120px,14svh)] max-w-none border-4 border-fg object-cover md:-left-[100px] md:-top-[150px] md:w-[200px] md:border-[5px]"
+                  />
+                ) : null
+              )}
+            </div>
           </div>
         </section>
 
@@ -420,7 +435,7 @@ const ReelHome = ({scenes, top}: Props) => {
                   alt=""
                   fill
                   sizes="100vw"
-                  className="object-cover md:hidden"
+                  className="object-cover will-change-transform md:hidden"
                 />
               )}
               {(cover || poster) && (
@@ -431,7 +446,7 @@ const ReelHome = ({scenes, top}: Props) => {
                   fill
                   sizes="100vw"
                   className={cx(
-                    "hidden object-cover md:block",
+                    "hidden object-cover will-change-transform md:block",
                     cover
                       ? "brightness-[0.62]"
                       : "blur-[40px] brightness-50 saturate-[1.3]"
@@ -571,7 +586,7 @@ const ReelHome = ({scenes, top}: Props) => {
           </div>
           <ul
             data-rec-row
-            className="flex w-max gap-4 px-5 md:gap-7 md:px-[clamp(20px,5vw,72px)]"
+            className="flex w-max gap-4 px-5 will-change-transform md:gap-7 md:px-[clamp(20px,5vw,72px)]"
           >
             {top.map((item) => (
               <li
