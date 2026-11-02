@@ -12,7 +12,7 @@ import {
   browseHref,
   pluralType,
 } from "@lib/browse";
-import {revealStyle, useStepReveal} from "./ReelChrome";
+import {reveal} from "./ReelChrome";
 
 type Props = {
   params: BrowseParams;
@@ -23,8 +23,6 @@ type Props = {
 };
 
 const ReelBrowse = ({params, items, ranks, counts, listLabel}: Props) => {
-  const tick = useStepReveal(`${params.list}-${params.type}`, 40);
-
   return (
     <div className="flex flex-col gap-6 md:gap-8">
       <nav
@@ -105,9 +103,12 @@ const ReelBrowse = ({params, items, ranks, counts, listLabel}: Props) => {
           </Link>
         </div>
       ) : (
-        <ol className="grid grid-cols-2 gap-x-3.5 gap-y-6 md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] md:gap-x-6 md:gap-y-10">
+        <ol
+          key={`${params.list}-${params.type}`}
+          className="grid grid-cols-2 gap-x-3.5 gap-y-6 md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] md:gap-x-6 md:gap-y-10"
+        >
           {items.map((item, i) => (
-            <li key={item.id} className="relative" style={revealStyle(tick, i)}>
+            <li key={item.id} {...reveal(i, "relative")}>
               <Link
                 href={`/${item.id}`}
                 className="group flex flex-col gap-2 md:gap-2.5"
