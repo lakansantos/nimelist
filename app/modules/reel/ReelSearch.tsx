@@ -1,12 +1,12 @@
 "use client";
 
 import cx from "classnames";
-import Image from "next/image";
 import Link from "next/link";
 import {CloseIcon, SearchIcon} from "@components/icons";
 import {AnimeItem} from "@lib/anime";
 import {useKitsuSearch} from "@lib/useKitsuSearch";
 import {reveal} from "./ReelChrome";
+import AnimeImage from "@components/AnimeImage";
 
 const SUGGESTIONS = ["Frieren", "Death Note", "One Piece", "Demon Slayer"];
 
@@ -117,20 +117,13 @@ const ReelSearch = ({
                   className="group flex flex-col gap-2 md:gap-2.5"
                 >
                   <span className="relative block">
-                    {item.poster ? (
-                      <Image
-                        src={item.poster.small}
-                        alt=""
-                        width={284}
-                        height={402}
-                        className="aspect-[2/3] w-full rounded-[10px] bg-[#1B2130] object-cover md:rounded-xl"
-                      />
-                    ) : (
-                      <span
-                        aria-hidden
-                        className="block aspect-[2/3] w-full rounded-xl bg-[#1B2130]"
-                      />
-                    )}
+                    <AnimeImage
+                      src={item.poster?.small}
+                      alt=""
+                      width={284}
+                      height={402}
+                      className="aspect-[2/3] w-full rounded-[10px] bg-[#1B2130] object-cover md:rounded-xl"
+                    />
                     <span className="absolute left-2 top-2 hidden rounded bg-ink/75 px-1.5 py-0.5 font-mono text-[11px] md:block">
                       {String(i + 1).padStart(2, "0")}
                     </span>

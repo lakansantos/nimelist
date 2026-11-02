@@ -1,13 +1,13 @@
 "use client";
 
 import cx from "classnames";
-import Image from "next/image";
 import Link from "next/link";
 import {useState} from "react";
 import {CloseIcon} from "@components/icons";
 import {SavedAnime, useSaved} from "@lib/saved";
 import {SavedSort, savedMeta, sortSaved} from "@lib/savedView";
 import {reveal} from "./ReelChrome";
+import AnimeImage from "@components/AnimeImage";
 
 const ReelSaved = () => {
   const {items, remove, restore} = useSaved();
@@ -93,20 +93,13 @@ const ReelSaved = () => {
                   href={`/${entry.id}`}
                   className="group flex flex-col gap-2.5"
                 >
-                  {entry.poster || entry.cover ? (
-                    <Image
-                      src={(entry.poster || entry.cover) as string}
-                      alt=""
-                      width={284}
-                      height={402}
-                      className="aspect-[2/3] w-full rounded bg-[#1B2130] object-cover"
-                    />
-                  ) : (
-                    <span
-                      aria-hidden
-                      className="block aspect-[2/3] w-full rounded bg-[#1B2130]"
-                    />
-                  )}
+                  <AnimeImage
+                    src={entry.poster || entry.cover}
+                    alt=""
+                    width={284}
+                    height={402}
+                    className="aspect-[2/3] w-full rounded bg-[#1B2130] object-cover"
+                  />
                   <span className="line-clamp-2 min-h-[2.75em] font-semibold leading-snug group-hover:text-amber">
                     {entry.title}
                   </span>

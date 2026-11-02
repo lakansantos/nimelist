@@ -1,7 +1,6 @@
 "use client";
 
 import cx from "classnames";
-import Image from "next/image";
 import Link from "next/link";
 import {
   Fragment,
@@ -24,6 +23,7 @@ import {
   usePrefersReducedMotion,
   useReelEngine,
 } from "./useReelEngine";
+import AnimeImage from "@components/AnimeImage";
 
 const FRAMES_PER_UNIT = 48;
 const pad = (n: number, length = 2) => String(n).padStart(length, "0");
@@ -420,7 +420,7 @@ const ReelHome = ({scenes, top}: Props) => {
             <div className="max-md:absolute max-md:left-1/2 max-md:top-1/2 max-md:h-0 max-md:w-0 md:contents">
               {scenes.map((s, i) =>
                 s.poster ? (
-                  <Image
+                  <AnimeImage
                     key={s.id}
                     data-fan
                     src={s.poster.small}
@@ -450,7 +450,8 @@ const ReelHome = ({scenes, top}: Props) => {
               className={cx("absolute inset-0", !active && "invisible")}
             >
               {poster && (
-                <Image
+                <AnimeImage
+                  fallback="hide"
                   data-part="bg"
                   src={poster}
                   alt=""
@@ -460,9 +461,10 @@ const ReelHome = ({scenes, top}: Props) => {
                 />
               )}
               {(cover || poster) && (
-                <Image
+                <AnimeImage
+                  fallback="hide"
                   data-part="bg"
-                  src={(cover || poster) as string}
+                  src={cover || poster}
                   alt=""
                   fill
                   sizes="100vw"
@@ -545,7 +547,7 @@ const ReelHome = ({scenes, top}: Props) => {
                   data-part="poster"
                   className="absolute right-[clamp(120px,14vw,240px)] top-1/2 hidden w-[clamp(200px,20vw,300px)] md:block"
                 >
-                  <Image
+                  <AnimeImage
                     src={s.poster?.medium ?? poster}
                     alt=""
                     width={390}
@@ -619,20 +621,13 @@ const ReelHome = ({scenes, top}: Props) => {
                   href={`/${item.id}`}
                   className="group flex flex-col gap-2.5 md:gap-3"
                 >
-                  {item.poster ? (
-                    <Image
-                      src={item.poster.small}
-                      alt=""
-                      width={284}
-                      height={402}
-                      className="aspect-[2/3] w-full rounded-xl object-cover"
-                    />
-                  ) : (
-                    <span
-                      aria-hidden
-                      className="aspect-[2/3] w-full rounded-xl bg-raised"
-                    />
-                  )}
+                  <AnimeImage
+                    src={item.poster?.small}
+                    alt=""
+                    width={284}
+                    height={402}
+                    className="aspect-[2/3] w-full rounded-xl object-cover"
+                  />
                   <span className="truncate text-sm font-semibold group-hover:text-amber md:text-[15px]">
                     {item.title}
                   </span>
@@ -818,7 +813,14 @@ const StripButton = ({title, active, thumb, onJump, size}: StripProps) => (
     )}
   >
     {thumb ? (
-      <Image src={thumb} alt="" fill sizes="44px" className="object-cover" />
+      <AnimeImage
+        fallback="icon"
+        src={thumb}
+        alt=""
+        fill
+        sizes="44px"
+        className="object-cover"
+      />
     ) : (
       <LogoMark size={size === "desktop" ? 26 : 22} className="text-fg" />
     )}

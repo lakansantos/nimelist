@@ -1,5 +1,4 @@
 import cx from "classnames";
-import Image from "next/image";
 import Link from "next/link";
 import SaveButton from "@components/SaveButton";
 import {SearchIcon} from "@components/icons";
@@ -10,6 +9,7 @@ import {
   scoreLabel,
   wideImage,
 } from "@lib/anime";
+import AnimeImage from "@components/AnimeImage";
 
 export const SectionHeader = ({
   id,
@@ -43,21 +43,16 @@ export const PosterThumb = ({
 }: {
   item: AnimeItem;
   className?: string;
-}) =>
-  item.poster ? (
-    <Image
-      src={item.poster.tiny}
-      alt=""
-      width={110}
-      height={156}
-      className={cx("shrink-0 rounded-md bg-raised object-cover", className)}
-    />
-  ) : (
-    <span
-      aria-hidden
-      className={cx("shrink-0 rounded-md bg-raised", className)}
-    />
-  );
+}) => (
+  <AnimeImage
+    fallback="icon"
+    src={item.poster?.tiny}
+    alt=""
+    width={110}
+    height={156}
+    className={cx("shrink-0 rounded-md bg-raised object-cover", className)}
+  />
+);
 
 export const SearchFieldLink = () => (
   <Link
@@ -226,20 +221,13 @@ export const PosterGrid = ({
     {items.map((item, i) => (
       <li key={item.id} className="relative">
         <Link href={`/${item.id}`} className="group flex flex-col gap-2">
-          {item.poster ? (
-            <Image
-              src={item.poster.small}
-              alt=""
-              width={284}
-              height={402}
-              className="aspect-[2/3] w-full rounded-[10px] bg-raised object-cover"
-            />
-          ) : (
-            <span
-              aria-hidden
-              className="aspect-[2/3] w-full rounded-[10px] bg-raised"
-            />
-          )}
+          <AnimeImage
+            src={item.poster?.small}
+            alt=""
+            width={284}
+            height={402}
+            className="aspect-[2/3] w-full rounded-[10px] bg-raised object-cover"
+          />
           <span className="line-clamp-2 text-xs font-medium leading-snug group-hover:text-amber md:truncate md:text-sm">
             {item.title}
           </span>
@@ -269,7 +257,8 @@ export const FeaturedCard = ({item, rank}: {item: AnimeItem; rank: number}) => {
     >
       <div className="relative h-[150px] shrink-0 overflow-hidden bg-raised md:h-auto md:min-h-[280px] md:flex-1">
         {image && (
-          <Image
+          <AnimeImage
+            fallback="hide"
             src={image.src}
             alt=""
             fill
