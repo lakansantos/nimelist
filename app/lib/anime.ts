@@ -73,10 +73,28 @@ const pickTitle = (a: Anime["attributes"]) =>
   a.titles?.ja_jp ||
   "Untitled";
 
+/**
+ * Kitsu sometimes sends an image with every sized URL null and only a signed
+ * `original` link that expires in minutes (e.g. anime 49877). Our pages are
+ * cached far longer than that, so treat such an image as missing.
+ */
+const pick = (...urls: (string | null | undefined)[]) =>
+  urls.find((u): u is string => !!u) ?? null;
+
 export const toAnimeItem = (anime: Anime): AnimeItem => {
   const a = anime.attributes;
-  const poster = a.posterImage;
-  const cover = a.coverImage;
+  const p = a.posterImage;
+  const posterLarge = p && pick(p.large, p.medium, p.small);
+  const poster =
+    p && posterLarge
+      ? {
+          tiny: pick(p.tiny, p.small, posterLarge) as string,
+          small: pick(p.small, posterLarge) as string,
+          medium: pick(p.medium, posterLarge) as string,
+          large: posterLarge,
+        }
+      : null;
+  const cover = a.coverImage?.large ? a.coverImage : null;
   const score = a.averageRating ? Number(a.averageRating) : null;
   const coverHeight = cover?.meta?.dimensions?.large?.height;
 
@@ -96,14 +114,7 @@ export const toAnimeItem = (anime: Anime): AnimeItem => {
     startDate: a.startDate || null,
     endDate: a.endDate || null,
     trailerId: a.youtubeVideoId || null,
-    poster: poster
-      ? {
-          tiny: poster.tiny,
-          small: poster.small ?? poster.large,
-          medium: poster.medium ?? poster.large,
-          large: poster.large,
-        }
-      : null,
+    poster,
     cover: cover ? {large: cover.large, original: cover.original} : null,
     coverPosition:
       cover && a.coverImageTopOffset && coverHeight

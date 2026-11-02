@@ -120,3 +120,30 @@ input[type="search"]::-webkit-search-cancel-button {
     clip-path: inset(0 0 0 0);
   }
 }
+
+/* Image loading skeleton: a shimmer on the image's own background, so it shows
+   until the picture paints and never touches the image's transform/opacity. */
+.img-skeleton {
+  background-color: #1b2130;
+  background-image: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .img-skeleton {
+    animation: img-shimmer 1.4s linear infinite;
+  }
+}
+@keyframes img-shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}

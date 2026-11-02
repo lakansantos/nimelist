@@ -1,7 +1,7 @@
 import cx from "classnames";
-import Image from "next/image";
 import Link from "next/link";
 import {AnimeItem, episodesLabel, scoreLabel} from "@lib/anime";
+import AnimeImage from "@components/AnimeImage";
 
 /**
  * Details hero: cover zooms out while the title slides in. The motion lives
@@ -24,7 +24,8 @@ const ReelDetailsHero = ({
       className="relative h-[560px] overflow-hidden md:h-[600px]"
     >
       {poster && (
-        <Image
+        <AnimeImage
+          fallback="hide"
           src={poster}
           alt=""
           fill
@@ -34,8 +35,9 @@ const ReelDetailsHero = ({
         />
       )}
       {(cover || poster) && (
-        <Image
-          src={(cover || poster) as string}
+        <AnimeImage
+          fallback="hide"
+          src={cover || poster}
           alt=""
           fill
           priority
