@@ -34,3 +34,58 @@ input[type="search"]::-webkit-search-cancel-button {
     outline-offset: 2px;
   }
 }
+
+/*
+ * Reel details hero reveal. Runs on the compositor (transform / clip-path /
+ * opacity) so it stays smooth; timings match the old 12 fps stepped version.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .reel-hero-zoom {
+    animation: reel-hero-zoom 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .reel-hero-zoom-lg {
+    --reel-zoom-from: 1.18;
+  }
+  .reel-hero-title {
+    animation: reel-hero-title 520ms cubic-bezier(0.22, 1, 0.36, 1) 160ms both;
+  }
+  .reel-hero-ja {
+    animation: reel-hero-ja 520ms cubic-bezier(0.22, 1, 0.36, 1) 330ms both;
+  }
+  .reel-hero-meta {
+    animation: reel-hero-fade 300ms ease-out 640ms both;
+  }
+}
+
+@keyframes reel-hero-zoom {
+  from {
+    transform: scale(var(--reel-zoom-from, 1.14));
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes reel-hero-title {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes reel-hero-ja {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes reel-hero-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
