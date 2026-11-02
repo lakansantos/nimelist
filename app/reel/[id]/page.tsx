@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import {notFound} from "next/navigation";
 import SaveButton from "@components/SaveButton";
@@ -7,6 +6,7 @@ import {episodesLabel, formatAired} from "@lib/anime";
 import {detailsMetadata, loadDetails} from "@lib/details";
 import {ReelPage} from "@modules/reel/ReelChrome";
 import ReelDetailsHero from "@modules/reel/ReelDetailsHero";
+import AnimeImage from "@components/AnimeImage";
 
 type Props = {params: {id: string}};
 
@@ -91,15 +91,13 @@ export default async function ReelDetails({params}: Props) {
           </div>
 
           <aside className="flex flex-col gap-3.5 md:max-w-[380px] md:flex-[1_1_300px]">
-            {anime.poster && (
-              <Image
-                src={anime.poster.large}
-                alt={`${anime.title} poster`}
-                width={550}
-                height={780}
-                className="hidden aspect-[2/3] w-full border-[6px] border-fg object-cover md:block"
-              />
-            )}
+            <AnimeImage
+              src={anime.poster?.large}
+              alt={`${anime.title} poster`}
+              width={550}
+              height={780}
+              className="hidden aspect-[2/3] w-full border-[6px] border-fg object-cover md:block"
+            />
             <div className="flex gap-2 md:flex-col md:gap-3.5">
               <SaveButton
                 item={anime}
@@ -148,7 +146,8 @@ export default async function ReelDetails({params}: Props) {
               </span>
             </span>
             {next.cover && (
-              <Image
+              <AnimeImage
+                fallback="hide"
                 src={next.cover.large}
                 alt=""
                 width={840}
@@ -177,20 +176,13 @@ export default async function ReelDetails({params}: Props) {
                     href={`/${item.id}`}
                     className="group flex flex-col gap-2 md:gap-2.5"
                   >
-                    {item.poster ? (
-                      <Image
-                        src={item.poster.small}
-                        alt=""
-                        width={284}
-                        height={402}
-                        className="aspect-[2/3] w-full rounded-[10px] object-cover md:rounded-xl"
-                      />
-                    ) : (
-                      <span
-                        aria-hidden
-                        className="block aspect-[2/3] w-full rounded-xl bg-[#1B2130]"
-                      />
-                    )}
+                    <AnimeImage
+                      src={item.poster?.small}
+                      alt=""
+                      width={284}
+                      height={402}
+                      className="aspect-[2/3] w-full rounded-[10px] object-cover md:rounded-xl"
+                    />
                     <span className="text-[13px] font-semibold leading-snug group-hover:text-amber md:text-[15px]">
                       {item.title}
                     </span>

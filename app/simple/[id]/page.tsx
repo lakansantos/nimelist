@@ -1,5 +1,4 @@
 import cx from "classnames";
-import Image from "next/image";
 import Link from "next/link";
 import {notFound} from "next/navigation";
 import SaveButton from "@components/SaveButton";
@@ -7,6 +6,7 @@ import {PlayIcon} from "@components/icons";
 import {episodesLabel, formatAired, scoreLabel, wideImage} from "@lib/anime";
 import {loadDetails, detailsMetadata} from "@lib/details";
 import {PosterGrid} from "@modules/simple/parts";
+import AnimeImage from "@components/AnimeImage";
 
 type Props = {params: {id: string}};
 
@@ -51,7 +51,8 @@ export default async function SimpleDetails({params}: Props) {
 
       <div className="relative hidden h-[200px] overflow-hidden rounded-2xl bg-raised md:block">
         {banner && (
-          <Image
+          <AnimeImage
+            fallback="hide"
             src={banner.src}
             alt=""
             fill
@@ -67,21 +68,14 @@ export default async function SimpleDetails({params}: Props) {
       </div>
 
       <div className="flex gap-3.5 md:-mt-[110px] md:gap-8 md:px-6">
-        {anime.poster ? (
-          <Image
-            src={anime.poster.medium}
-            alt={`${anime.title} poster`}
-            width={390}
-            height={554}
-            priority
-            className="relative aspect-[2/3] w-28 shrink-0 rounded-[10px] bg-raised object-cover md:w-[200px] md:rounded-xl md:border-4 md:border-ground"
-          />
-        ) : (
-          <span
-            aria-hidden
-            className="aspect-[2/3] w-28 shrink-0 rounded-[10px] bg-raised md:w-[200px]"
-          />
-        )}
+        <AnimeImage
+          src={anime.poster?.medium}
+          alt={`${anime.title} poster`}
+          width={390}
+          height={554}
+          priority
+          className="relative aspect-[2/3] w-28 shrink-0 rounded-[10px] bg-raised object-cover md:w-[200px] md:rounded-xl md:border-4 md:border-ground"
+        />
         <div className="flex min-w-0 flex-col gap-1.5 md:gap-3.5 md:pt-[120px]">
           {(rank || score) && (
             <span className="font-mono text-[11px] tracking-[0.04em] text-amber md:text-xs">

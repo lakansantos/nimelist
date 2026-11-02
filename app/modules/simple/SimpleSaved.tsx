@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import {useState} from "react";
 import {CloseIcon} from "@components/icons";
 import {SavedAnime, useSaved} from "@lib/saved";
 import {sortSaved, SavedSort, savedMeta} from "@lib/savedView";
+import AnimeImage from "@components/AnimeImage";
 
 const SimpleSaved = () => {
   const {items, remove, restore} = useSaved();
@@ -69,20 +69,14 @@ const SimpleSaved = () => {
                 href={`/${entry.id}`}
                 className="flex min-w-0 flex-1 items-center gap-3.5 hover:text-amber"
               >
-                {entry.poster || entry.cover ? (
-                  <Image
-                    src={(entry.poster || entry.cover) as string}
-                    alt=""
-                    width={80}
-                    height={114}
-                    className="h-[57px] w-10 shrink-0 rounded-md bg-raised object-cover"
-                  />
-                ) : (
-                  <span
-                    aria-hidden
-                    className="h-[57px] w-10 shrink-0 rounded-md bg-raised"
-                  />
-                )}
+                <AnimeImage
+                  fallback="icon"
+                  src={entry.poster || entry.cover}
+                  alt=""
+                  width={80}
+                  height={114}
+                  className="h-[57px] w-10 shrink-0 rounded-md bg-raised object-cover"
+                />
                 <span className="flex min-w-0 flex-col gap-0.5">
                   <span className="truncate text-sm font-medium md:text-[15px]">
                     {entry.title}

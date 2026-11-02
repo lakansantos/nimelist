@@ -1,7 +1,6 @@
 "use client";
 
 import cx from "classnames";
-import Image from "next/image";
 import Link from "next/link";
 import SaveButton from "@components/SaveButton";
 import {AnimeItem, episodesLabel} from "@lib/anime";
@@ -13,6 +12,7 @@ import {
   pluralType,
 } from "@lib/browse";
 import {reveal} from "./ReelChrome";
+import AnimeImage from "@components/AnimeImage";
 
 type Props = {
   params: BrowseParams;
@@ -114,20 +114,13 @@ const ReelBrowse = ({params, items, ranks, counts, listLabel}: Props) => {
                 className="group flex flex-col gap-2 md:gap-2.5"
               >
                 <span className="relative block">
-                  {item.poster ? (
-                    <Image
-                      src={item.poster.small}
-                      alt=""
-                      width={284}
-                      height={402}
-                      className="aspect-[2/3] w-full rounded-[10px] bg-[#1B2130] object-cover md:rounded-xl"
-                    />
-                  ) : (
-                    <span
-                      aria-hidden
-                      className="block aspect-[2/3] w-full rounded-xl bg-[#1B2130]"
-                    />
-                  )}
+                  <AnimeImage
+                    src={item.poster?.small}
+                    alt=""
+                    width={284}
+                    height={402}
+                    className="aspect-[2/3] w-full rounded-[10px] bg-[#1B2130] object-cover md:rounded-xl"
+                  />
                   <span className="absolute bottom-1 left-2 font-display text-[40px] font-extrabold leading-none tracking-[-0.05em] text-transparent [-webkit-text-stroke:1.5px_#F5B544] md:bottom-1.5 md:left-2.5 md:text-[56px] md:[-webkit-text-stroke:2px_#F5B544]">
                     {String(ranks[i]).padStart(2, "0")}
                   </span>
