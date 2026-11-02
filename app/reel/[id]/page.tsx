@@ -37,7 +37,7 @@ export default async function ReelDetails({params}: Props) {
 
   return (
     <ReelPage mobileLabel="DETAILS" bleed>
-      <ReelDetailsHero anime={anime} rank={rank} />
+      <ReelDetailsHero key={anime.id} anime={anime} rank={rank} />
 
       <div className="flex flex-col gap-7 px-5 pt-5 md:gap-16 md:px-[clamp(20px,5vw,72px)] md:pt-10">
         <div className="flex flex-col-reverse gap-7 md:flex-row md:flex-wrap md:items-start md:gap-12">

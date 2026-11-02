@@ -7,14 +7,13 @@ import {useState} from "react";
 import {CloseIcon} from "@components/icons";
 import {SavedAnime, useSaved} from "@lib/saved";
 import {SavedSort, savedMeta, sortSaved} from "@lib/savedView";
-import {revealStyle, useStepReveal} from "./ReelChrome";
+import {reveal} from "./ReelChrome";
 
 const ReelSaved = () => {
   const {items, remove, restore} = useSaved();
   const [sort, setSort] = useState<SavedSort>("recent");
   const [last, setLast] = useState<SavedAnime | null>(null);
   const list = sortSaved(items, sort);
-  const tick = useStepReveal(`${sort}-${items.length > 0}`, 30);
   const count = String(items.length).padStart(2, "0");
 
   const pill = (value: SavedSort, label: string) => (
@@ -78,12 +77,14 @@ const ReelSaved = () => {
         </div>
       ) : (
         <div className="no-scrollbar -mx-5 overflow-x-auto rounded-md bg-[#0E1016] py-[22px] [background-image:radial-gradient(circle,#07080B_4px,transparent_4.5px),radial-gradient(circle,#07080B_4px,transparent_4.5px)] [background-position:0_0,0_100%] [background-repeat:repeat-x,repeat-x] [background-size:22px_22px,22px_22px] md:mx-0">
-          <ul className="flex w-max gap-4 px-5 md:gap-[22px] md:px-6">
+          <ul
+            key={sort}
+            className="flex w-max gap-4 px-5 md:gap-[22px] md:px-6"
+          >
             {list.map((entry, i) => (
               <li
                 key={entry.id}
-                className="flex w-[180px] flex-col gap-3 md:w-60"
-                style={revealStyle(tick, i, "x")}
+                {...reveal(i, "flex w-[180px] flex-col gap-3 md:w-60", "x")}
               >
                 <span className="font-mono text-[11px] tracking-[0.1em] text-[#9AA1B2]">
                   FRAME {String(i + 1).padStart(2, "0")}

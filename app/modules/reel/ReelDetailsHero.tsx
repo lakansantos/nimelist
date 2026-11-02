@@ -1,16 +1,12 @@
-"use client";
-
 import cx from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import {AnimeItem, episodesLabel, scoreLabel} from "@lib/anime";
-import {useStepReveal} from "./ReelChrome";
 
-const step = (tick: number, start: number, frames: number) =>
-  Math.floor(Math.max(0, Math.min(1, (tick - start) / frames)) * frames) /
-  frames;
-
-/** Details hero: cover zooms out over 12 frames while the title snaps in. */
+/**
+ * Details hero: cover zooms out while the title slides in. The motion lives
+ * in globals.css (reel-hero-*) so it runs smoothly on the compositor.
+ */
 const ReelDetailsHero = ({
   anime,
   rank,
@@ -18,8 +14,6 @@ const ReelDetailsHero = ({
   anime: AnimeItem;
   rank: number | null;
 }) => {
-  const tick = useStepReveal(anime.id, 14);
-  const q = step(tick, 0, 12);
   const score = scoreLabel(anime);
   const cover = anime.cover?.large;
   const poster = anime.poster?.large;
@@ -36,8 +30,7 @@ const ReelDetailsHero = ({
           fill
           priority
           sizes="100vw"
-          className="object-cover md:hidden"
-          style={{transform: `scale(${(1.18 - q * 0.18).toFixed(3)})`}}
+          className="reel-hero-zoom reel-hero-zoom-lg object-cover md:hidden"
         />
       )}
       {(cover || poster) && (
@@ -48,13 +41,10 @@ const ReelDetailsHero = ({
           priority
           sizes="100vw"
           className={cx(
-            "hidden object-cover md:block",
+            "reel-hero-zoom hidden object-cover md:block",
             cover ? "brightness-[0.6]" : "blur-[40px] brightness-50"
           )}
-          style={{
-            objectPosition: anime.coverPosition,
-            transform: `scale(${(1.14 - q * 0.14).toFixed(3)})`,
-          }}
+          style={{objectPosition: anime.coverPosition}}
         />
       )}
       <div
@@ -65,12 +55,7 @@ const ReelDetailsHero = ({
         <span
           lang="ja"
           aria-hidden
-          className="absolute right-3.5 top-20 font-jp text-[34px] font-black text-fg/85 [text-shadow:0_2px_12px_rgba(0,0,0,0.5)] [writing-mode:vertical-rl] md:right-[clamp(20px,4vw,64px)] md:top-10 md:text-[clamp(48px,6vw,96px)] md:text-fg/20 md:[text-shadow:none]"
-          style={{
-            clipPath: `inset(0 0 ${((1 - step(tick, 4, 6)) * 100).toFixed(
-              0
-            )}% 0)`,
-          }}
+          className="reel-hero-ja absolute right-3.5 top-20 font-jp text-[34px] font-black text-fg/85 [text-shadow:0_2px_12px_rgba(0,0,0,0.5)] [writing-mode:vertical-rl] md:right-[clamp(20px,4vw,64px)] md:top-10 md:text-[clamp(48px,6vw,96px)] md:text-fg/20 md:[text-shadow:none]"
         >
           {anime.titleJa}
         </span>
@@ -102,20 +87,12 @@ const ReelDetailsHero = ({
         <div className="overflow-hidden">
           <h1
             id="reel-details-title"
-            className="font-display text-[56px] font-extrabold leading-[0.9] tracking-[-0.05em] md:text-[clamp(56px,9vw,150px)] md:leading-[0.88]"
-            style={{
-              transform: `translateY(${((1 - step(tick, 2, 6)) * 110).toFixed(
-                0
-              )}%)`,
-            }}
+            className="reel-hero-title font-display text-[56px] font-extrabold leading-[0.9] tracking-[-0.05em] md:text-[clamp(56px,9vw,150px)] md:leading-[0.88]"
           >
             {anime.title}
           </h1>
         </div>
-        <div
-          className="flex flex-wrap gap-x-3 gap-y-1.5 font-mono text-[11px] tracking-[0.04em] text-[#D5D9E2] md:gap-x-[18px] md:gap-y-2.5 md:text-[13px]"
-          style={{opacity: tick >= 8 ? 1 : 0}}
-        >
+        <div className="reel-hero-meta flex flex-wrap gap-x-3 gap-y-1.5 font-mono text-[11px] tracking-[0.04em] text-[#D5D9E2] md:gap-x-[18px] md:gap-y-2.5 md:text-[13px]">
           {[
             anime.year,
             anime.type.toUpperCase(),
