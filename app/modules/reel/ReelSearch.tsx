@@ -6,7 +6,7 @@ import Link from "next/link";
 import {CloseIcon, SearchIcon} from "@components/icons";
 import {AnimeItem} from "@lib/anime";
 import {useKitsuSearch} from "@lib/useKitsuSearch";
-import {revealStyle, useStepReveal} from "./ReelChrome";
+import {reveal} from "./ReelChrome";
 
 const SUGGESTIONS = ["Frieren", "Death Note", "One Piece", "Demon Slayer"];
 
@@ -20,10 +20,7 @@ const ReelSearch = ({
   const {query, setQuery, results, loading, error, hasQuery} =
     useKitsuSearch(initialQuery);
   const list = hasQuery ? results : popular;
-  const tick = useStepReveal(
-    `${hasQuery}-${list.map((a) => a.id).join(",")}`,
-    40
-  );
+  const revealKey = `${hasQuery}-${list.map((a) => a.id).join(",")}`;
   const count = String(results.length).padStart(2, "0");
 
   let label = "POPULAR RIGHT NOW";
@@ -107,13 +104,14 @@ const ReelSearch = ({
         </span>
         {list.length > 0 && (
           <ul
+            key={revealKey}
             className={cx(
               "grid grid-cols-2 gap-x-3.5 gap-y-[22px] md:grid-cols-[repeat(auto-fill,minmax(180px,1fr))] md:gap-x-[22px] md:gap-y-8",
               loading && "opacity-60"
             )}
           >
             {list.map((item, i) => (
-              <li key={item.id} style={revealStyle(tick, i)}>
+              <li key={item.id} {...reveal(i)}>
                 <Link
                   href={`/${item.id}`}
                   className="group flex flex-col gap-2 md:gap-2.5"

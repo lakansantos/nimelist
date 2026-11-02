@@ -2,14 +2,13 @@
 
 import cx from "classnames";
 import Link from "next/link";
-import {CSSProperties, ReactNode, useEffect, useState} from "react";
+import {CSSProperties, ReactNode} from "react";
 import Credits from "@components/Credits";
 import {LogoMark} from "@components/Logo";
 import ModeToggle, {usePublicPath} from "@components/ModeToggle";
 import {BookmarkIcon, FilmIcon, GridIcon, SearchIcon} from "@components/icons";
 import {switchModeHref} from "@lib/mode";
 import {useSaved} from "@lib/saved";
-import {usePrefersReducedMotion} from "./useReelEngine";
 
 const NAV = [
   {href: "/", label: "Reel", icon: <FilmIcon size={20} />},
@@ -19,46 +18,14 @@ const NAV = [
 ];
 
 /**
- * Frame counter for the Reel's "pop in" reveals: ticks at 12 fps up to `max`
- * and restarts when `key` changes. With reduced motion it starts finished.
+ * Props for item i of a Reel "pop in" list: a CSS animation (reel-pop-* in
+ * globals.css) staggered 125 ms per item, skipped under reduced motion. Put a
+ * `key` on the list to replay it when its contents change.
  */
-export const useStepReveal = (key: unknown, max = 36) => {
-  const reduced = usePrefersReducedMotion();
-  const [tick, setTick] = useState(0);
-  useEffect(() => {
-    if (reduced) {
-      setTick(max);
-      return;
-    }
-    setTick(0);
-    const timer = setInterval(() => {
-      setTick((t) => {
-        if (t >= max) {
-          clearInterval(timer);
-          return t;
-        }
-        return t + 1;
-      });
-    }, 83);
-    return () => clearInterval(timer);
-  }, [key, max, reduced]);
-  return tick;
-};
-
-/** Item i pops in over 4 frames, 1.5 frames after the previous one. */
-export const revealStyle = (
-  tick: number,
-  i: number,
-  axis: "y" | "x" = "y"
-): CSSProperties => {
-  const s = Math.floor(Math.max(0, Math.min(1, (tick - i * 1.5) / 4)) * 4) / 4;
-  return axis === "y"
-    ? {
-        clipPath: `inset(${(1 - s) * 100}% 0 0 0)`,
-        transform: `translateY(${(1 - s) * 24}px)`,
-      }
-    : {clipPath: `inset(0 ${(1 - s) * 100}% 0 0)`};
-};
+export const reveal = (i: number, className = "", axis: "y" | "x" = "y") => ({
+  className: cx(axis === "y" ? "reel-pop-y" : "reel-pop-x", className),
+  style: {"--reel-i": Math.min(i, 24)} as CSSProperties,
+});
 
 const ReelHeader = () => {
   const path = usePublicPath();
