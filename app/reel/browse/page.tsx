@@ -2,7 +2,10 @@ import {loadBrowse, parseBrowseParams} from "@lib/browse";
 import {ReelPage} from "@modules/reel/ReelChrome";
 import ReelBrowse from "@modules/reel/ReelBrowse";
 
-export const metadata = {title: "Browse · Nimelist"};
+export const metadata = {
+  title: "Browse · Nimelist",
+  alternates: {canonical: "/browse"},
+};
 
 type Props = {searchParams: Record<string, string | string[] | undefined>};
 

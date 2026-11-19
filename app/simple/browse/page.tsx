@@ -10,7 +10,10 @@ import {
 } from "@lib/browse";
 import {AnimeTable, PosterGrid} from "@modules/simple/parts";
 
-export const metadata = {title: "Browse · Nimelist"};
+export const metadata = {
+  title: "Browse · Nimelist",
+  alternates: {canonical: "/browse"},
+};
 
 type Props = {searchParams: Record<string, string | string[] | undefined>};
 
