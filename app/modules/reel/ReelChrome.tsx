@@ -89,6 +89,7 @@ const ReelMobileTop = ({label}: {label: string}) => {
       </span>
       <a
         href={switchModeHref("simple", path)}
+        rel="nofollow"
         className="inline-flex min-h-[36px] items-center rounded-full border border-[#2A3040] px-3 text-xs font-semibold text-[#D5D9E2]"
       >
         Simple mode

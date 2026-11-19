@@ -1,7 +1,10 @@
 import {ReelPage} from "@modules/reel/ReelChrome";
 import ReelSaved from "@modules/reel/ReelSaved";
 
-export const metadata = {title: "Saved · Nimelist"};
+export const metadata = {
+  title: "Saved · Nimelist",
+  robots: {index: false},
+};
 
 export default function ReelSavedPage() {
   return (

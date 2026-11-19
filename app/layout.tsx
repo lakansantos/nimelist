@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import {SITE_URL} from "@lib/site";
 
 /*
  * Self-hosted (Latin subset, variable weight) instead of next/font/google:
@@ -38,6 +39,7 @@ const JP_FONT_CSS =
   "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Nimelist",
   description:
     "An anime website that tracks latest, trending and recommended anime for you to enjoy.",
