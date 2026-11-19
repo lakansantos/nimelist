@@ -408,6 +408,7 @@ const ReelHome = ({scenes, top}: Props) => {
             </Link>
             <a
               href={switchModeHref("simple", "/")}
+              rel="nofollow"
               className="inline-flex min-h-[44px] items-center px-1 font-semibold text-muted-strong hover:text-amber"
             >
               Prefer it calm? Simple mode
@@ -601,6 +602,7 @@ const ReelHome = ({scenes, top}: Props) => {
               </Link>
               <a
                 href={switchModeHref("simple", "/")}
+                rel="nofollow"
                 className="hidden min-h-[44px] items-center font-semibold text-muted-strong hover:text-amber md:inline-flex"
               >
                 or switch to Simple mode
@@ -970,6 +972,7 @@ const ReelMenu = ({
           </span>
           <a
             href={switchModeHref("simple", "/")}
+            rel="nofollow"
             className="flex-1 font-display text-[clamp(26px,4.8svh,44px)] font-extrabold leading-[1.15] tracking-[-0.04em] hover:text-white md:text-[clamp(40px,6.5vw,92px)] md:leading-none"
           >
             Simple mode

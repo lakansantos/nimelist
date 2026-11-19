@@ -3,6 +3,8 @@ import {franchiseKey} from "@lib/anime";
 import {getTopRated, getTrending} from "@lib/kitsu";
 import ReelHome from "@modules/reel/ReelHome";
 
+export const metadata = {alternates: {canonical: "/"}};
+
 const SCENE_COUNT = 5;
 
 export default async function ReelPage() {

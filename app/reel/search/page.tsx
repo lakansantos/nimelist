@@ -2,7 +2,10 @@ import {getTrending} from "@lib/kitsu";
 import {ReelPage} from "@modules/reel/ReelChrome";
 import ReelSearch from "@modules/reel/ReelSearch";
 
-export const metadata = {title: "Search · Nimelist"};
+export const metadata = {
+  title: "Search · Nimelist",
+  robots: {index: false},
+};
 
 type Props = {searchParams: Record<string, string | string[] | undefined>};
 

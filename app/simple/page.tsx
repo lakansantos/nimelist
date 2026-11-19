@@ -7,6 +7,8 @@ import {
   SectionHeader,
 } from "@modules/simple/parts";
 
+export const metadata = {alternates: {canonical: "/"}};
+
 export default async function SimpleHome() {
   const [trending, topRated] = await Promise.all([
     getTrending(),

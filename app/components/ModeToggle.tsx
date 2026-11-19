@@ -47,6 +47,7 @@ const ModeToggle = ({current, look, className}: Props) => {
     return (
       <a
         href={switchModeHref(mode, path)}
+        rel="nofollow"
         className={cx(common, "text-muted-strong hover:text-fg")}
       >
         {label}

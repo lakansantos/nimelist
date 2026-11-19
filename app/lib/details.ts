@@ -41,9 +41,10 @@ export const loadDetails = async (id: string): Promise<Details | null> => {
 
 export const detailsMetadata = async (id: string): Promise<Metadata> => {
   const anime = /^\d+$/.test(id) ? await getAnime(id) : null;
-  if (!anime) return {title: "Not found · Nimelist"};
+  if (!anime) return {title: "Not found · Nimelist", robots: {index: false}};
   return {
     title: `${anime.title} · Nimelist`,
+    alternates: {canonical: `/${id}`},
     description: anime.synopsis.slice(0, 160) || undefined,
   };
 };
